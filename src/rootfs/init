@@ -1,0 +1,34 @@
+#!/bin/sh
+## AwlsomeLinux Init Script
+## Based on Ivandavidov's Minimal Linux Live Project (GNU GPLv3)
+
+echo -e "Welcome to AwlsomeLinux! (/init)"
+
+# Mount Core Filesystems.
+/etc/01_prepare.sh
+
+# Print First Init Message.
+cat /etc/msg/init_01.txt
+
+# Wait til Keyboard is Striked or 5 Seconds.
+read -t 5 -n1 -s key
+
+if [ ! "$key" = "" ] ; then
+	# Print Second Init Message.
+	cat /etc/msg/init_02.txt
+	
+	# Set Flag which gives user Terminal Control.
+	export PID1_SHELL=true
+	
+	# Activate Interactive Shell.
+	exec setsid cttyhack sh
+fi
+
+# Activate the Overlay Process which will store the RootFS in the RAM
+# Otherwise, the process will continue to initiate AwlsomeLinux.
+exec /etc/02_overlay.sh
+
+echo "(/init) - Error Code 0x0001 [INIT ERROR]"
+
+# Wait for Key to be pressed.
+read -n1 -s
