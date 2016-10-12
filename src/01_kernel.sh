@@ -21,7 +21,7 @@ NUM_JOBS=$((NUM_CORES * JOB_FACTOR))
 echo "--- KERNEL BEGIN ---"
 
 ## DEBUGGING:
-echo "--- KERNEL_GET BEGIN ---"
+#echo "--- KERNEL_GET BEGIN ---"
 
 cd source
 
@@ -40,7 +40,7 @@ tar -xvf $ARCHIVE_FILE -C ../work/kernel
 cd $SRC_DIR
 
 ## DEBUGGING:
-echo "--- KERNEL_GET END ---"
+#echo "--- KERNEL_GET END ---"
 
 
 
@@ -49,7 +49,7 @@ echo "--- KERNEL_GET END ---"
 ######################
 
 ## DEBUGGING:
-echo "--- KERNEL_BUILD BEGIN ---"
+#echo "--- KERNEL_BUILD BEGIN ---"
 
 cd work/kernel
 
@@ -108,6 +108,6 @@ make \
 cd $SRC_DIR
 
 ## DEBUGGING:
-echo "--- KERNEL_BUILD END ---"
+#echo "--- KERNEL_BUILD END ---"
 
 echo "--- KERNEL END ---"
