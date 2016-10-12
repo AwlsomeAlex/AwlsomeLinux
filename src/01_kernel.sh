@@ -1,9 +1,9 @@
 #!/bin/sh
 # AwlsomeLinux Kernel Compile Script
 
-###################
-# Kernel Settings #
-###################
+####################
+# Compile Settings #
+####################
 
 SRC_DIR=$(pwd)
 DOWNLOAD_URL=$(grep -i ^KERNEL_SOURCE_URL .config | cut -f2 -d'=')
@@ -20,9 +20,12 @@ NUM_JOBS=$((NUM_CORES * JOB_FACTOR))
 
 echo "--- KERNEL BEGIN ---"
 
+## DEBUGGING:
+echo "--- KERNEL_GET BEGIN ---"
+
 cd source
 
-# Downloads the latest Linux Kernel and puts it in the Source Directory.
+# Downloads the Linux Kernel and puts it in the Source Directory.
 echo "Downloading Kernel Source Bundle from Kernel.org"
 wget -c $DOWNLOAD_URL
 
@@ -36,11 +39,17 @@ tar -xvf $ARCHIVE_FILE -C ../work/kernel
 
 cd $SRC_DIR
 
+## DEBUGGING:
+echo "--- KERNEL_GET END ---"
+
 
 
 ######################
 # Build Linux Kernel #
 ######################
+
+## DEBUGGING:
+echo "--- KERNEL_BUILD BEGIN ---"
 
 cd work/kernel
 
@@ -97,5 +106,8 @@ make \
 	headers_install -j $NUM_JOBS
 	
 cd $SRC_DIR
+
+## DEBUGGING:
+echo "--- KERNEL_BUILD END ---"
 
 echo "--- KERNEL END ---"
