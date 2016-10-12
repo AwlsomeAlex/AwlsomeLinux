@@ -11,6 +11,7 @@ ARCHIVE_FILE=${DOWNLOAD_URL##*/}
 JOB_FACTOR="$(grep -i ^JOB_FACTOR .config | cut -f2 -d'=')"
 NUM_CORES=$(grep ^processor /proc/cpuinfo | wc -l)
 NUM_JOBS=$((NUM_CORES * JOB_FACTOR))
+KERNEL_INSTALLED=$(pwd)/work/kernel/kernel_installed
 GLIBC_PREPARED=$(pwd)/work/glibc/glibc_prepared
 
 

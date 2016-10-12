@@ -11,7 +11,7 @@ ARCHIVE_FILE=${DOWNLOAD_URL##*/}
 JOB_FACTOR="$(grep -i ^JOB_FACTOR .config | cut -f2 -d'=')"
 NUM_CORES=$(grep ^processor /proc/cpuinfo | wc -l)
 NUM_JOBS=$((NUM_CORES * JOB_FACTOR))
-KERNEL_INSTALLED=$SRC_DIR/work/kernel/kernel_installed
+KERNEL_INSTALLED=$(pwd)/work/kernel/kernel_installed
 
 
 
@@ -121,6 +121,7 @@ mkdir -p usr
 cd usr
 ln -s ../include include
 ln -s ../lib lib
+cd ../include
 ln -s $KERNEL_INSTALLED/include/linux linux
 ln -s $KERNEL_INSTALLED/include/asm asm
 ln -s $KERNEL_INSTALLED/include/asm-generic asm-generic
