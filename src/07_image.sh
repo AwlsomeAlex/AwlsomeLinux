@@ -17,7 +17,7 @@ KERNEL_INSTALLED=$SRC_DIR/work/kernel/kernel_installed
 echo "--- IMAGE BEGIN ---"
 
 ## DEBUGGING:
-echo "--- PREPARE_IMAGE BEGIN ---"
+#echo "--- PREPARE_IMAGE BEGIN ---"
 
 # Find SYSLINUX Directory.
 cd work/syslinux
@@ -41,7 +41,7 @@ cp -r work/src work/isoimage
 echo "Source Directory has been copied to ISO Image."
 
 ## DEBUGGING:
-echo "--- PREPARE_IMAGE END ---"
+#echo "--- PREPARE_IMAGE END ---"
 
 
 
@@ -63,7 +63,7 @@ echo "--- PREPARE_IMAGE END ---"
 ##################
 
 ## DEBUGGING:
-echo "--- GEN_IMAGE BEGIN ---"
+#echo "--- GEN_IMAGE BEGIN ---"
 
 cd work/isoimage
 
@@ -114,7 +114,7 @@ fi
 cd $SRC_DIR
 
 ## DEBUGGING:
-echo "--- GEN_IMAGE END ---"
+#echo "--- GEN_IMAGE END ---"
 
 echo "--- IMAGE END ---"
 	
