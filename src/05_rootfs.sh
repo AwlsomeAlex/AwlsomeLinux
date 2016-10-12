@@ -19,7 +19,7 @@ BUSYBOX_INSTALLED=$(pwd)/work/busybox/busybox_installed
 echo "--- ROOTFS BEGIN ---"
 
 ## DEBUGGING:
-echo "--- GEN_ROOTFS BEGIN ---"
+#echo "--- GEN_ROOTFS BEGIN ---"
 
 cd work
 
@@ -78,7 +78,7 @@ echo "The initramfs area has been generated."
 cd $SRC_ROOT
 
 ## DEBUGGING:
-echo "--- GEN_ROOTFS END ---"
+#echo "--- GEN_ROOTFS END ---"
 
 
 
@@ -87,7 +87,7 @@ echo "--- GEN_ROOTFS END ---"
 ###############
 
 ## DEBUGGING:
-echo "--- PACK_ROOTFS BEGIN ---"
+#echo "--- PACK_ROOTFS BEGIN ---"
 
 cd work
 
@@ -106,6 +106,6 @@ echo "Packing of initramfs has finished."
 cd $SRC_DIR
 
 ## DEBUGGING:
-echo "--- PACK_ROOTFS END ---"
+#echo "--- PACK_ROOTFS END ---"
 
 echo "--- ROOTFS END ---"
