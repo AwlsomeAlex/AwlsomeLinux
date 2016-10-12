@@ -1,5 +1,5 @@
 #!/bin/sh
-# AwlsomeLinux Glibc Compile Script
+# AwlsomeLinux BusyBox Compile Script
 
 ####################
 # Compile Settings #
