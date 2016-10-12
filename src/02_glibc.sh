@@ -22,7 +22,7 @@ KERNEL_INSTALLED=$(pwd)/work/kernel/kernel_installed
 echo "--- GLIBC BEGIN ---"
 
 ## DEBUGGING:
-echo "--- GLIBC_GET BEGIN ---"
+#echo "--- GLIBC_GET BEGIN ---"
 
 cd source
 
@@ -41,7 +41,7 @@ tar -xvf $ARCHIVE_FILE -C ../work/glibc
 cd $SRC_DIR
 
 ## DEBUGGING:
-echo "--- GLIBC_GET END ---"
+#echo "--- GLIBC_GET END ---"
 
 
 
@@ -50,7 +50,7 @@ echo "--- GLIBC_GET END ---"
 ###############
 
 ## DEBUGGING:
-echo "--- GLIBC_BUILD BEGIN ---"
+#echo "--- GLIBC_BUILD BEGIN ---"
 
 cd work/glibc
 
@@ -96,7 +96,7 @@ make install \
 cd $SRC_DIR
 
 ## DEBUGGING:
-echo " --- GLIBC_BUILD END ---"
+#echo " --- GLIBC_BUILD END ---"
 
 
 
@@ -105,7 +105,7 @@ echo " --- GLIBC_BUILD END ---"
 #################
 
 ## DEBUGGING:
-echo " --- GLIBC_PREPARED BEGIN ---"
+#echo " --- GLIBC_PREPARED BEGIN ---"
 
 cd work/glibc
 
@@ -130,6 +130,6 @@ ln -s $KERNEL_INSTALLED/include/mtd mtd
 cd $SRC_DIR
 
 ## DEBUGGING:
-echo " --- GLIBC_PREPARE END ---"
+#echo " --- GLIBC_PREPARE END ---"
 
 echo "--- GLIBC END ---"
