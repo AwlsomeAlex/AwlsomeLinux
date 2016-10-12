@@ -81,7 +81,7 @@ $GLIBC_SRC/configure \
 	--without-gd \
 	--without-selinux \
 	--disable-werror \
-	CFLAGS="-0s -s -fno-stack-protector -U_FORTIFY_SOURCE"
+	CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE"
 	
 # Compile Glibc from Configuration File.
 echo "Building Glibc..."
