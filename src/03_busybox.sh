@@ -69,7 +69,7 @@ make defconfig -j $NUM_JOBS
 sed -i "s/.*CONFIG_INETD.*/CONFIG_INETD=n/" .config
 
 # Remember and tell BusyBox Full GLIBC Installation Area.
-GLIBC_PREPARED_ESCAPE=$(echo \"GLIBC_PREPARED\" | sed 's/\//\\\//g')
+GLIBC_PREPARED_ESCAPED=$(echo \"$GLIBC_PREPARED\" | sed 's/\//\\\//g')
 sed -i "s/.*CONFIG_SYSROOT.*/CONFIG_SYSROOT=$GLIBC_PREPARED_ESCAPED/" .config
 
 # Compile BusyBox.
