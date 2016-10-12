@@ -20,7 +20,7 @@ NUM_JOBS=$((NUM_CORES * JOB_FACTOR))
 
 echo "--- KERNEL BEGIN ---"
 
-cd sources
+cd source
 
 # Downloads the latest Linux Kernel and puts it in the Source Directory.
 echo "Downloading Kernel Source Bundle from Kernel.org"
