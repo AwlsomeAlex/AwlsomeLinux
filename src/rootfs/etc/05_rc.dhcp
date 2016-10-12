@@ -5,12 +5,12 @@
 ip addr add $ip/$mask dev $interface
 
 if [ "$router" ]; then
-	ip route add default via $router dev $interface
+  ip route add default via $router dev $interface
 fi
 
-fi [ "$ip" ]; then
-	echo "DHCP configuration for device $interface"
-	echo "ip:		$ip"
-	echo "mask:		$mask"
-	echo "router:	$router"
+if [ "$ip" ]; then
+  echo "DHCP configuration for device $interface"
+  echo "ip:     $ip"
+  echo "mask:   $mask"
+  echo "router: $router"
 fi
