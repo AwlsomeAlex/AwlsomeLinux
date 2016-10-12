@@ -22,7 +22,7 @@ GLIBC_PREPARED=$(pwd)/work/glibc/glibc_prepared
 echo "--- BUSYBOX BEGIN ---"
 
 ## DEBUGGING:
-echo "--- BUSYBOX_GET BEGIN ---"
+#echo "--- BUSYBOX_GET BEGIN ---"
 
 cd source
 
@@ -41,7 +41,7 @@ tar -xvf $ARCHIVE_FILE -C ../work/busybox
 cd $SRC_DIR
 
 ## DEBUGGING:
-echo "--- BUSYBOX_GET END ---"
+#echo "--- BUSYBOX_GET END ---"
 
 
 
@@ -50,7 +50,7 @@ echo "--- BUSYBOX_GET END ---"
 #################
 
 ## DEBUGGING:
-echo "--- BUSYBOX_BUILD BEGIN ---"
+#echo "--- BUSYBOX_BUILD BEGIN ---"
 
 cd work/busybox
 
@@ -88,6 +88,6 @@ make \
 cd $SRC_DIR
 
 ## DEBUGGING:
-echo "--- BUSYBOX_BUILD END ---"
+#echo "--- BUSYBOX_BUILD END ---"
 
 echo "--- BUSYBOX END ---"
