@@ -26,7 +26,7 @@ echo "--- KERNEL_GET BEGIN ---"
 cd source
 
 # Downloads the Linux Kernel and puts it in the Source Directory.
-echo "Downloading Kernel Source Bundle from Kernel.org"
+echo "Downloading Kernel Source Bundle from kernel.org"
 wget -c $DOWNLOAD_URL
 
 # Delete Kernel Work Directory
