@@ -1,4 +1,3 @@
-
 [1m  This is PID 1 rescue shell inside the initramfs area. Execute the following in
   order to continue with the overlay initialization process:
 [1m[32m

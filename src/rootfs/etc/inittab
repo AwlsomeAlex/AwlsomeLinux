@@ -15,3 +15,4 @@ tty3::once:cat /etc/msg/welcome.txt
 tty3::respawn:/bin/sh
 tty4::once:cat /etc/msg/welcome.txt
 tty4::respawn:/bin/sh
+

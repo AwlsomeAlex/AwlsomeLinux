@@ -1,22 +1,45 @@
 #!/bin/sh
-## AwlsomeLinux Overlay and RAM Init Script 
-## Based on Ivandavidov's Minimal Linux Live Project (GNU GPLv3)
 
-## Create the Mountpoint in RAM.
+# System initialization sequence:
+#
+# /init
+#  |
+#  +--(1) /etc/01_prepare.sh
+#  |
+#  +--(2) /etc/02_overlay.sh (this file)
+#          |
+#          +-- /etc/03_init.sh
+#               |
+#               +-- /sbin/init
+#                    |
+#                    +--(1) /etc/04_bootscript.sh
+#                    |       |
+#                    |       +-- udhcpc
+#                    |           |
+#                    |           +-- /etc/05_rc.udhcp
+#                    |
+#                    +--(2) /bin/sh (Alt + F1, main console)
+#                    |
+#                    +--(2) /bin/sh (Alt + F2)
+#                    |
+#                    +--(2) /bin/sh (Alt + F3)
+#                    |
+#                    +--(2) /bin/sh (Alt + F4)
+
+# Create the new mountpoint in RAM.
 mount -t tmpfs none /mnt
 
-## Create all critical directories for the Filesystem.
+# Create folders for all critical file systems.
 mkdir /mnt/dev
 mkdir /mnt/sys
 mkdir /mnt/proc
 mkdir /mnt/tmp
 mkdir /mnt/var
-echo "Created all critical directories."
+echo "Created folders for all critical file systems."
 
-## Copy root folder into mountpoint.
+# Copy root folders in the new mountpoint.
+echo "Copying the root file system to /mnt..."
 cp -a bin etc lib lib64 root sbin src usr var /mnt 2>/dev/null
-
-## Code Below NEEDS to be Simplified, as I am only using the Folder Method with Read/Write.
 
 DEFAULT_OVERLAY_DIR="/tmp/minimal/overlay"
 DEFAULT_UPPER_DIR="/tmp/minimal/rootfs"
@@ -135,18 +158,21 @@ for DEVICE in /dev/* ; do
   rm -rf $DEVICE_MNT 2>/dev/null
 done
 
-## Move critical directories to new mountpoint.
+# Move critical file systems to the new mountpoint.
 mount --move /dev /mnt/dev
 mount --move /sys /mnt/sys
 mount --move /proc /mnt/proc
-mount --move /tmp /mnt /tmp
-echo "Mounted Critical Directories /dev, /sys, /proc, /tmp to /mnt."
+mount --move /tmp /mnt/tmp
+echo "Mount locations /dev, /sys, /tmp and /proc have been moved to /mnt."
 
-## Switches Root from initramfs to overlayfs.
+# The new mountpoint becomes file system root. All original root folders are
+# deleted automatically as part of the command execution. The '/sbin/init' 
+# process is invoked and it becomes the new PID 1 parent process.
 echo "Switching from initramfs root area to overlayfs root area."
 exec switch_root /mnt /etc/03_init.sh
 
-echo "(/etc/02_overlay.sh) - ERROR CODE 0x0002 [OVERLAY ERROR]"
+echo "(/etc/02_overlay.sh) - there is a serious bug..."
 
-## Wait for Keyboard Strike.
+# Wait until any key has been pressed.
 read -n1 -s
+

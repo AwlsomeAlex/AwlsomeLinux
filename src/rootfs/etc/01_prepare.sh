@@ -1,12 +1,34 @@
 #!/bin/sh
-## AwlsomeLinux Core Mount Initialization Script 
-## Based on Ivandavidov's Minimal Linux Live Project (GNU GPLv3)
 
-## Turn off Most Kernel Messages.
+# System initialization sequence:
+#
+# /init
+#  |
+#  +--(1) /etc/01_prepare.sh (this file)
+#  |
+#  +--(2) /etc/02_overlay.sh
+#          |
+#          +-- /etc/03_init.sh
+#               |
+#               +-- /sbin/init
+#                    |
+#                    +--(1) /etc/04_bootscript.sh
+#                    |       |
+#                    |       +-- udhcpc
+#                    |           |
+#                    |           +-- /etc/05_rc.udhcp
+#                    |
+#                    +--(2) /bin/sh (Alt + F1, main console)
+#                    |
+#                    +--(2) /bin/sh (Alt + F2)
+#                    |
+#                    +--(2) /bin/sh (Alt + F3)
+#                    |
+#                    +--(2) /bin/sh (Alt + F4)
+
 dmesg -n 1
-echo "Most Kernel messages have been iqnored."
+echo "Most kernel messages have been suppressed."
 
-## Mount Core Filesystems.
 mount -t devtmpfs none /dev
 mount -t proc none /proc
 mount -t tmpfs none /tmp -o mode=1777
@@ -16,4 +38,5 @@ mkdir -p /dev/pts
 
 mount -t devpts none /dev/pts
 
-echo "Mounted all Core Filesystems."
+echo "Mounted all core filesystems. Ready to continue."
+

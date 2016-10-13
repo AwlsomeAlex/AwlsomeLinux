@@ -1,13 +1,36 @@
 #!/bin/sh
-## AwlsomeLinux Boot Script 
-## Based on Ivandavidov's Minimal Linux Live Project (GNU GPLv3)
+
+# System initialization sequence:
+#
+# /init
+#  |
+#  +--(1) /etc/01_prepare.sh
+#  |
+#  +--(2) /etc/02_overlay.sh
+#          |
+#          +-- /etc/03_init.sh
+#               |
+#               +-- /sbin/init
+#                    |
+#                    +--(1) /etc/04_bootscript.sh (this file)
+#                    |       |
+#                    |       +-- udhcpc
+#                    |           |
+#                    |           +-- /etc/05_rc.udhcp
+#                    |
+#                    +--(2) /bin/sh (Alt + F1, main console)
+#                    |
+#                    +--(2) /bin/sh (Alt + F2)
+#                    |
+#                    +--(2) /bin/sh (Alt + F3)
+#                    |
+#                    +--(2) /bin/sh (Alt + F4)
 
 echo -e "Welcome to AwlsomeLinux! (/sbin/init)"
 
-## Looks for Network Devices and Sets them Up.
-
 for DEVICE in /sys/class/net/* ; do
-	echo "Found Network Device ${DEVICE##*/}"
-	ip link set ${DEVICE##*/} up
-	[ ${DEVICE##*/} != lo ] && udhcpc -b -i ${DEVICE##*/} -s /etc/05_rc.dhcp
+  echo "Found network device ${DEVICE##*/}" 
+  ip link set ${DEVICE##*/} up
+  [ ${DEVICE##*/} != lo ] && udhcpc -b -i ${DEVICE##*/} -s /etc/05_rc.dhcp
 done
+

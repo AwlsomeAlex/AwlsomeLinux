@@ -1,6 +1,30 @@
 #!/bin/sh
-## AwlsomeLinux DHCP Default Settings
-## Based on Ivandavidov's Minimal Linux Live Project (GNU GPLv3)
+
+# System initialization sequence:
+#
+# /init
+#  |
+#  +--(1) /etc/01_prepare.sh
+#  |
+#  +--(2) /etc/02_overlay.sh
+#          |
+#          +-- /etc/03_init.sh
+#               |
+#               +-- /sbin/init
+#                    |
+#                    +--(1) /etc/04_bootscript.sh
+#                    |       |
+#                    |       +-- udhcpc
+#                    |           |
+#                    |           +-- /etc/05_rc.udhcp (this file)
+#                    |
+#                    +--(2) /bin/sh (Alt + F1, main console)
+#                    |
+#                    +--(2) /bin/sh (Alt + F2)
+#                    |
+#                    +--(2) /bin/sh (Alt + F3)
+#                    |
+#                    +--(2) /bin/sh (Alt + F4)
 
 ip addr add $ip/$mask dev $interface
 
@@ -14,3 +38,4 @@ if [ "$ip" ]; then
   echo "mask:   $mask"
   echo "router: $router"
 fi
+
