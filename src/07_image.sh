@@ -91,7 +91,7 @@ mkdir -p minimal/work
 
 cp -rf $SRC_DIR/work/src/overlay/* minimal/rootfs/
 
-echo "Generating without OverlayFS"
+echo "Generated OverlayFS"
 
 # Create ISOLINUX Configuration File.
 echo 'default kernel.xz initrd=rootfs.xz vga=ask' > ./isolinux.cfg

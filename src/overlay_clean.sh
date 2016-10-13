@@ -20,7 +20,7 @@ rm -rf work/overlay
 mkdir -p work/overlay
 
 # Extra Precaution just in case this script is generated before Main Script.
-mkdir -p work/src/minimal_overlay
+mkdir -p work/src/overlay
 
 # Clean/Create Overlay Source Area
 rm -rf source/overlay
