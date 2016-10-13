@@ -60,10 +60,7 @@ time sh build_awlsomelinux_overlay.sh
 
 echo "Generating Overlay Structure..."
 
-mkdir -p minimal/rootfs
-mkdir -p minimal/work
-
-cp -rf $SRC_DIR/work/src/overlay/* minimal/rootfs/
+time sh build_awlsomelinux_overlay.sh
 
 #echo "--- OVERLAY_IMAGE END ---"
 
@@ -88,7 +85,11 @@ cp $KERNEL_INSTALLED/kernel ./kernel.xz
 # Copy RootFS to ISO Image.
 cp ../rootfs.cpio.xz ./rootfs.xz
 
-## RESERVED FOR OVERLAY
+# Copy OverlayFS to ISO Image.
+mkdir -p minimal/rootfs
+mkdir -p minimal/work
+
+cp -rf $SRC_DIR/work/src/overlay/* minimal/rootfs/
 
 echo "Generating without OverlayFS"
 
