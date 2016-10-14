@@ -70,6 +70,7 @@ echo "Configuring Links..."
 	--disable-utf8 \
 	--without-ipv6 \
 	--without-ssl \
+	--without-zlib \
 	--without-x 
 
 # Set CLAGS Directly in Makefile.
