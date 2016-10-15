@@ -68,10 +68,10 @@ echo "Configuring Ncurses..."
 ./configure \
 	--prefix=$SRC_DIR/work/overlay/ncurses/ncurses_installed \
     --with-shared           \
-    --without-debug         \
     --without-normal        \
-    --enable-pc-files       \
-    --enable-widec			\
+    --without-debug         \
+    --without-cxx-binding   \
+	--with-abi-version=5
     CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
     CPPFLAGS="-P"
 	
