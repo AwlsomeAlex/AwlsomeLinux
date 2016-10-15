@@ -44,9 +44,9 @@ echo "--- NCURSES_GET END ---"
 
 
 
-###############
-# Build Links #
-###############
+#################
+# Build Ncurses #
+#################
 
 ## DEBUGGING:
 echo "--- NCURSES_BUILD BEGIN ---"
@@ -79,7 +79,7 @@ echo "Configuring Ncurses..."
 echo "Building Ncurses..."
 make -j $NUM_JOBS
 
-# Install Ncurses
+# Install Ncurses.
 echo "Installing Ncurses..."
 make install -j $NUM_JOBS
 

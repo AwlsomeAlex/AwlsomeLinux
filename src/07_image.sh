@@ -50,15 +50,15 @@ echo "Source Directory has been copied to ISO Image."
 #############
 
 ## DEBUGGING:
-#echo "--- OVERLAY_IMAGE BEGIN ---"
+echo "--- OVERLAY_IMAGE BEGIN ---"
 
 ## Folder Overlay Type Only:
 
-#echo "Generating Overlay Structure..."
+echo "Generating Overlay Structure..."
 
-#time sh build_awlsomelinux_overlay.sh
+time sh build_awlsomelinux_overlay.sh
 
-#echo "--- OVERLAY_IMAGE END ---"
+echo "--- OVERLAY_IMAGE END ---"
 
 
 
