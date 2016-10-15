@@ -40,10 +40,6 @@ mkdir work/isoimage
 cp -r work/src work/isoimage
 echo "Source Directory has been copied to ISO Image."
 
-# Build Overlay Bundles.
-echo "Generating Additional Overlay Bundles. Please wait, this can take a while..."
-time sh build_awlsomelinux_overlay.sh
-
 ## DEBUGGING:
 #echo "--- PREPARE_IMAGE END ---"
 
@@ -58,9 +54,9 @@ time sh build_awlsomelinux_overlay.sh
 
 ## Folder Overlay Type Only:
 
-echo "Generating Overlay Structure..."
+#echo "Generating Overlay Structure..."
 
-time sh build_awlsomelinux_overlay.sh
+#time sh build_awlsomelinux_overlay.sh
 
 #echo "--- OVERLAY_IMAGE END ---"
 
