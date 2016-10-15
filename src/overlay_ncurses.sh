@@ -61,17 +61,20 @@ echo "Preparing Ncurses Work Area. Please wait..."
 make clean -j $NUM_JOBS 2>/dev/null
 
 # Configure Ncurses to not make libraries it can't support.
-#sed -i '/LIBTOOL_INSTALL/d' c++/Makefile.in
+sed -i '/LIBTOOL_INSTALL/d' c++/Makefile.in
 
 # Configure Ncurses
 echo "Configuring Ncurses..."
 ./configure \
 	--prefix=$SRC_DIR/work/overlay/ncurses/ncurses_installed \
-    --with-shared           \
-    --without-normal        \
-    --without-debug         \
-    --without-cxx-binding   \
-	--with-abi-version=5
+	--with-termlib \
+    --with-shared \
+    --with-terminfo-dirs=/lib/terminfo \
+    --with-default-terminfo-dirs=/lib/terminfo \
+    --without-normal \
+    --without-debug \
+    --without-cxx-binding \
+	--with-abi-version=5 \
     CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
     CPPFLAGS="-P"
 	
@@ -87,9 +90,11 @@ make install -j $NUM_JOBS
 echo "Reducing Ncurses Size..."
 strip -g ../ncurses_installed/bin/* 2>/dev/null
 strip -g ../ncurses_installed/lib/* 2>/dev/null
+strip -g ../ncurses_installed/share/* 2>/dev/null
 
 cp -r ../ncurses_installed/bin $SRC_DIR/work/src/overlay
 cp -r ../ncurses_installed/lib $SRC_DIR/work/src/overlay
+cp -r ../ncurses_installed/share $SRC_DIR/work/src/overlay
 echo "Ncurses has been Installed to OverlayFS."
 
 cd $SRC_DIR
