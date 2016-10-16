@@ -17,7 +17,7 @@ Right now, AwlsomeLinux is a minimal, almost installable, and text-based Linux E
 * Links 2.13 (Text-Based Web Browser)
 * Dropbear 2016.74 (Shell SSH)
 * Nano 2.6.3 (Alternative Text Editor)
-* MLL-Tools [Minimal Linux Live Tools] (Installer for Minimal-Like Projects)
+* MLL-Tools {Minimal Linux Live Tools} (Installer for Minimal-Like Projects)
 
 ## Contributors:
 * AwlsomeAlex (Creator of AwlsomeLinux)
