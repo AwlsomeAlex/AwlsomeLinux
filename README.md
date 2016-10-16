@@ -12,6 +12,7 @@ Right now, AwlsomeLinux is a minimal, almost installable, and text-based Linux E
 * The Latest Long-Term-Support Linux Kernel (4.4.x)
 * The Latest Stable BusyBox (1.25.x Stable)
 * The Latest Glibc (2.24)
+
 **Extra Packages Such As:**
 * Links 2.13 (Text-Based Web Browser)
 * Dropbear 2016.74 (Shell SSH)
