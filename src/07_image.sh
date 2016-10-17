@@ -71,10 +71,6 @@ echo "--- OVERLAY_IMAGE END ---"
 
 cd work/isoimage
 
-# Copy precompiled 'isolinux.bin' and 'ldlinux.c32' to ISO Image.
-cp $WORK_SYSLINUX_DIR/bios/core/isolinux.bin .
-cp $WORK_SYSLINUX_DIR/bios/com32/elflink/ldlinux/ldlinux.c32 .
-
 # Copy Kernel to ISO Image.
 cp $KERNEL_INSTALLED/kernel ./kernel.xz
 
@@ -89,8 +85,20 @@ cp -rf $SRC_DIR/work/src/overlay/* minimal/rootfs/
 
 echo "Generated OverlayFS"
 
+# Copy precompiled 'isolinux.bin' and 'ldlinux.c32' to ISO Image.
+cp $WORK_SYSLINUX_DIR/bios/core/isolinux.bin .
+cp $WORK_SYSLINUX_DIR/bios/com32/elflink/ldlinux/ldlinux.c32 .
+
 # Create ISOLINUX Configuration File.
-echo 'default kernel.xz initrd=rootfs.xz vga=ask' > ./isolinux.cfg
+echo 'default kernel.xz initrd=rootfs.xz vga=ask' > ./syslinux.cfg
+
+# Create UEFI Start Script.
+mkdir -p efi/boot
+cat << CEOF > ./efi/boot/startup.nsh
+echo -off
+echo AwlsomeLinux is starting...
+\\kernel.xz initrd=\\rootfs.xz
+CEOF
 
 # Generate the ISO Image.
 genisoimage \
@@ -106,6 +114,7 @@ genisoimage \
 	./
 	
 # Make ISO Image bootable on USB Flash Drives.
+# The -u option is used in EFI Boot Mode and Reduces ISO Size.
 isohybrid -u ../awlsomelinux.iso 2>/dev/null || true
 
 # Copy ISO Image to Root Project Folder.
