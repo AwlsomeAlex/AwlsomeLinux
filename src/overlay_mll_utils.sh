@@ -282,7 +282,7 @@ fi
 
 # Copy all generated files to the source overlay folder.
 cp -r $SRC_DIR/work/overlay/mll_utils/* \
-  $SRC_DIR/work/src/minimal_overlay
+  $SRC_DIR/work/src/overlay
 
 echo "All utilities have been installed."
 
