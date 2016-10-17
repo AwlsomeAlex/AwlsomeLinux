@@ -101,7 +101,6 @@ sed -i "s/^CONFIG_DEBUG_KERNEL.*/\\# CONFIG_DEBUG_KERNEL is not set/" .config
     # Enable the mixed EFI mode when building 64-bit kernel.
     echo "CONFIG_EFI_MIXED=y" > .config
   fi
-fi
 
 # Compile the Kernel.
 echo "Building Linux Kernel..."
