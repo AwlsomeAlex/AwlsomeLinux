@@ -93,12 +93,12 @@ cp $WORK_SYSLINUX_DIR/bios/com32/elflink/ldlinux/ldlinux.c32 .
 echo 'default kernel.xz initrd=rootfs.xz vga=ask' > ./syslinux.cfg
 
 # Create UEFI Start Script.
-mkdir -p efi/boot
-cat << CEOF > ./efi/boot/startup.nsh
-echo -off
-echo AwlsomeLinux is starting...
-\\kernel.xz initrd=\\rootfs.xz
-CEOF
+#mkdir -p efi/boot
+#cat << CEOF > ./efi/boot/startup.nsh
+#echo -off
+#echo AwlsomeLinux is starting...
+#\\kernel.xz initrd=\\rootfs.xz
+#CEOF
 
 # Generate the ISO Image.
 genisoimage \
