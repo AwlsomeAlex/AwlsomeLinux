@@ -89,16 +89,18 @@ sed -i "s/.*CONFIG_LOGO_LINUX_CLUT224.*/CONFIG_LOGO_LINUX_CLUT224=y/" .config
 # Disable Debugging in Kernel ==> Smaller Kernel.
 sed -i "s/^CONFIG_DEBUG_KERNEL.*/\\# CONFIG_DEBUG_KERNEL is not set/" .config
 
-# Enable EFI Stub.
-sed -i "s/.*CONFIG_EFI_STUB.*/CONFIG_EFI_STUB=y/" .config
+  # Enable the EFI stub
+  sed -i "s/.*CONFIG_EFI_STUB.*/CONFIG_EFI_STUB=y/" .config
 
-# Check if 32-bit kernel or 64-bit kernel being built.
-# Exit code '1' = 64bit // Exit code '0' = 32bit
-grep -q "CONFIG_X86_32=y" .config
+  # Check if we are building 32-bit kernel. The exit code is '1' when we are
+  # building 64-bit kernel, otherwise the exit code is '0'.
+  grep -q "CONFIG_X86_32=y" .config
 
-if [ $? = 1 ] ; then
-	# Enable Mixed EFI Mode when building 64 bit kernel.
-	echo "CONFIG_EFI_MIXED=y" > .config
+  # The '$?' variable holds the exit code of the last issued command.
+  if [ $? = 1 ] ; then
+    # Enable the mixed EFI mode when building 64-bit kernel.
+    echo "CONFIG_EFI_MIXED=y" > .config
+  fi
 fi
 
 # Compile the Kernel.
