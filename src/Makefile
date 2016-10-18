@@ -21,7 +21,7 @@ src:
 
 help:
 	@echo ""
-	@echo "	make all	Clean the Workspace and Generate AwlsomeLinux Image."
+	@echo " make all	Clean the Workspace and Generate AwlsomeLinux Image."
 	@echo ""
 	@echo " make clean 	Remove all Generated Files."
 	@echo ""
