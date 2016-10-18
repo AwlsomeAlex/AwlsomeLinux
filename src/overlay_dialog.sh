@@ -64,6 +64,7 @@ make clean -j $NUM_JOBS 2>/dev/null
 echo "Configuring Dialog..."
 ./configure \
 	--prefix=$SRC_DIR/work/overlay/dialog/dialog_installed \
+	--with-ncurses \
 	--disable-utf8 \
     CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE"
     
