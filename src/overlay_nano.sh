@@ -75,7 +75,7 @@ make -j $NUM_JOBS
 echo "Installing Nano..."
 make install -j $NUM_JOBS
 
-# Clean and Copy Ncurses.
+# Clean and Copy Nano.
 echo "Reducing Nano Size..."
 strip -g ../nano_installed/bin/* 2>/dev/null
 
@@ -99,5 +99,5 @@ cd $SRC_DIR
 ## DEBUGGING:
 echo "--- NANO_BUILD END ---"
 
-echo "--- OVERLAY_NANO END 
+echo "--- OVERLAY_NANO END ---"
 
