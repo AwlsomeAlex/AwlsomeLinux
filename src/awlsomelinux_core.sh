@@ -15,11 +15,18 @@
 # AwlsomeLinux Variables #
 ##########################
 
+SRC_DIR=$(pwd)
+JOB_FACTOR="$(grep -i ^JOB_FACTOR .config | cut -f2 -d'=')"
+NUM_CORES=$(grep ^processor /proc/cpuinfo | wc -l)
+NUM_JOBS=$((NUM_CORES * JOB_FACTOR))
+
 
 
 ##############################
 # AwlsomeLinux Main Packages #
 ##############################
+
+KERNEL_DOWNLOAD_URL=http://kernel.org/pub/linux/kernel/v4.x/linux-4.4.25.tar.xz
 
 
 
