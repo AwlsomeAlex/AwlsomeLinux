@@ -14,20 +14,26 @@ all: clean
 clean:
 	@echo "Removing AwlsomeLinux Core Packages' Source Files..."
 	@rm -rf core/source
+	@mkdir core/source
 	@echo "Removing AwlsomeLinux Core Packages' Work Files..."
 	@rm -rf core/work
+	@mkdir core/work
 	@echo "Removing AwlsomeLinux Core Pre-Generated Packages..."
 	@rm -rf core/core
+	@mkdir core/core
 	@echo "Removing Pre-Generated AwlsomeLinux ISO Image..."
 	@rm -rf awlsomelinux.iso
 	@echo "Removing AwlsomeLinux Image Directory Content..."
 	@rm -rf image/*
 	@echo "Removing AwlsomeLinux Overlay Packages' Source Files..."
 	@rm -rf overlay/source
+	@mkdir overlay/source
 	@echo "Removing AwlsomeLinux Overlay Packages' Work Files..."
 	@rm -rf overlay/work
+	@mkdir overlay/work
 	@echo "Removing AwlsomeLinux Overlay Pre-Generated Packages..."
 	@rm -rf overlay/overlay
+	@mkdir overlay/overlay
 	@echo "Remvoing AwlsomeLinux Build Log File..."
 	@rm -rf awlsomelinux.log
 
