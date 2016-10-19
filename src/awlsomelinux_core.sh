@@ -126,7 +126,24 @@ build_kernel() {
 #########
 
 get_glibc() {
-	echo "Get Glibc"
+	echo "== Get Glibc (Start) =="
+	
+	# Change Directory to 'core/source'
+	cd core/source
+	
+	# Download Kernel Version Defined in AwlsomeLinux Main Packages
+	wget -c $KERNEL_DOWNLOAD_URL
+	
+	# Clean out old Kernel Work Directory (If 'make clean' or 'make all' wasn't executed)
+	rm -rf ../work/kernel
+	mkdir ../work/kernel
+	
+	# Extract .xz Archive to 'core/work/kernel'
+	tar -xvf $KERNEL_ARCHIVE_FILE -C ../work/kernel
+	
+	cd $SRC_DIR
+	
+	echo "== Get Kernel (Stop) ==""
 }
 
 build_glibc() {

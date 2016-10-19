@@ -8,7 +8,7 @@
 .DEFAULT_GOAL := help
 
 all: clean
-	@echo "Executing the main AwlsomeLinux Creation Script..."
+	@echo "Executing the main AwlsomeLinux Core Creation Script..."
 	@time sh awlsomelinux_core.sh 2>&1 | tee awlsomelinux.log
 
 clean:
