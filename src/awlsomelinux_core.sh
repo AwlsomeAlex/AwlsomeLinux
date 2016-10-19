@@ -110,3 +110,5 @@ get_syslinux() {
 	echo "Get Syslinux"
 }
 
+get_kernel
+build_kernel
