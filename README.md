@@ -4,8 +4,11 @@ Creating a Linux Distributon Seemed to be an impossible task, where only the hug
 
 ![AwlsomeLinux](https://github.com/AwlsomeAlex/AwlsomeLinux/blob/master/AwlsomeLinux.png?raw=true)
 
-## NEWS: **AN INSTALL METHOD?!?**
-Wow, this is quite surprising... just as I was getting ready to start the Installer, Ivandavidov had an unexpected package added to his project, mll-tools (Minimal Linux Live Tools) which included the mkfs.ext2 command, a simple partition editor, and a complete **INSTALLER!** I will now make plans to instead implement mll-tools into AwlsomeLinux, because instead of doing it on an ArchLinux Live CD, it can now be directly installed **ON A MINIMAL LINUX LIVE CD!** Afterwards I will start to make plans on reorganizing the Overlay Structure, maybe into something like a **Package Manager** where the applications are loaded to a /usr/package/(source), I'm not sure, but whats next is the Installer, and what is after will most likely be Dialog.
+## NEWS: **A Rewrite is needed...**
+Well as quickly as I created AwlsomeLinux, I didn't expect it to be this disorganized and cluddered, so I've decided to rewite AwlsomeLinux **COMPLETELY**, hoping to break away from any ties drawing me towards Minimal Linux Live as well, not due to it being a bad thing or anything, but it's just too complicated for what I want, so instead of simplifying the process, i'm remaking it. This is how it will be designed:
+* A Core Directory & Build Script (Makes Linux Kernel, Busybox and Glibc)
+* An Image Directory & Build Script (Gets Syslinux and Makes ISO Image)
+* An Overlay Directory & Buidl Script **[TBD]** (*Possible Idea:* Gets Overlay Scripts from seperate repository and compiles them.)
 
 ## What is AwlsomeLinux?
 Right now, AwlsomeLinux is a minimal, almost installable, and text-based Linux Environment (Wouldn't call it a Distro yet...) which has the following features:
