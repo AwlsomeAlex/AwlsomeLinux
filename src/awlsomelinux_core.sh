@@ -27,7 +27,7 @@ NUM_JOBS=$((NUM_CORES * JOB_FACTOR))
 ##############################
 
 LINUX_DOWNLOAD_URL=http://kernel.org/pub/linux/kernel/v4.x/linux-4.4.25.tar.xz
-LINUX_ARCHIVE_FILE=${KERNEL_DOWNLOAD_URL##*/}
+LINUX_ARCHIVE_FILE=${LINUX_DOWNLOAD_URL##*/}
 GLIBC_DOWNLOAD_URL=http://ftp.gnu.org/gnu/glibc/glibc-2.24.tar.bz2
 GLIBC_ARCHIVE_FILE=${GLIBC_DOWNLOAD_URL##*/}
 
@@ -282,7 +282,11 @@ get_syslinux() {
 }
 
 get_linux
+
 build_linux
+
 get_glibc
+
 build_glibc
+
 prepare_glibc
