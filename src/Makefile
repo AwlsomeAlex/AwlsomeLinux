@@ -12,28 +12,28 @@ all: clean
 	@time sh awlsomelinux_core.sh 2>&1 | tee awlsomelinux.log
 
 clean:
-	@echo "Removing AwlsomeLinux Core Packages' Source Files..."
+	@echo "Removing AwlsomeLinux Core Packages' Source Archives..."
 	@rm -rf core/source
 	@mkdir core/source
 	@echo "Removing AwlsomeLinux Core Packages' Work Files..."
 	@rm -rf core/work
 	@mkdir core/work
-	@echo "Removing AwlsomeLinux Core Pre-Generated Packages..."
-	@rm -rf core/core
-	@mkdir core/core
+	@echo "Removing AwlsomeLinux Core Packages' Install Directory..."
+	@rm -rf core/install
+	@mkdir core/install
 	@echo "Removing Pre-Generated AwlsomeLinux ISO Image..."
 	@rm -rf awlsomelinux.iso
 	@echo "Removing AwlsomeLinux Image Directory Content..."
 	@rm -rf image/*
-	@echo "Removing AwlsomeLinux Overlay Packages' Source Files..."
+	@echo "Removing AwlsomeLinux Overlay Packages' Source Archives..."
 	@rm -rf overlay/source
 	@mkdir overlay/source
 	@echo "Removing AwlsomeLinux Overlay Packages' Work Files..."
 	@rm -rf overlay/work
 	@mkdir overlay/work
-	@echo "Removing AwlsomeLinux Overlay Pre-Generated Packages..."
-	@rm -rf overlay/overlay
-	@mkdir overlay/overlay
+	@echo "Removing AwlsomeLinux Overlay Packages' Install Directory..."
+	@rm -rf overlay/install
+	@mkdir overlay/install
 	@echo "Remvoing AwlsomeLinux Build Log File..."
 	@rm -rf awlsomelinux.log
 

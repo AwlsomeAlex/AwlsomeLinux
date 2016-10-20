@@ -55,11 +55,11 @@ get_kernel() {
 	wget -c $KERNEL_DOWNLOAD_URL
 	
 	# Clean out old Kernel Work Directory (If 'make clean' or 'make all' wasn't executed)
-	rm -rf ../work/kernel
-	mkdir ../work/kernel
+	rm -rf $SRC_DIR/core/work/kernel
+	mkdir $SRC_DIR/core/work/kernel
 	
 	# Extract .xz Archive to 'core/work/kernel'
-	tar -xvf $KERNEL_ARCHIVE_FILE -C ../work/kernel
+	tar -xvf $KERNEL_ARCHIVE_FILE -C $SRC_DIR/core/work/kernel
 	
 	cd $SRC_DIR
 	
@@ -73,8 +73,8 @@ build_kernel() {
 	cd core/work/kernel
 	
 	# Prepare Kernel Install Area
-	rm -rf kernel_ready
-	mkdir kernel_ready
+	rm -rf $SRC_DIR/core/install/kernel
+	mkdir $SRC_DIR/core/install/kernel
 	
 	# Change Directory to Extracted Archive Folder
 	cd $(ls -d linux-*)
@@ -111,12 +111,12 @@ build_kernel() {
 	# Install Linux Kernel
 	echo "Installing Linux Kernel..."
 	cp arch/x86/boot/bzImage \
-		$SRC_DIR/core/work/kernel/kernel_ready/kernel
+		$SRC_DIR/core/install/kernel/kernel
 		
 	# Generate Linux Kernel Header Files
 	echo "Generating Linux Kernel Headers..."
 	make \
-		INSTALL_HDR_PATH=$SRC_DIR/core/work/kernel/kernel_ready \
+		INSTALL_HDR_PATH=$SRC_DIR/core/install/kernel \
 		headers_install -j $NUM_JOBS
 		
 	echo "== Build Kernel (Stop) =="
@@ -129,51 +129,51 @@ build_kernel() {
 #########
 
 get_glibc() {
-	echo "== Get Glibc (Start) =="
+	#echo "== Get Glibc (Start) =="
 	
 	# Change Directory to 'core/source'
-	cd core/source
+	#cd core/source
 	
 	# Download Kernel Version Defined in AwlsomeLinux Main Packages
-	wget -c $GLIBC_DOWNLOAD_URL
+	#wget -c $GLIBC_DOWNLOAD_URL
 	
 	# Clean out old Glibc Work Directory (If 'make clean' or 'make all' wasn't executed)
-	rm -rf ../work/glibc
-	mkdir ../work/glibc
+	#rm -rf ../work/glibc
+	#mkdir ../work/glibc
 	
 	# Extract .xz Archive to 'core/work/glibc'
-	tar -xvf $GLIBC_ARCHIVE_FILE -C ../work/glibc
+	#tar -xvf $GLIBC_ARCHIVE_FILE -C ../work/glibc
 	
-	cd $SRC_DIR
+	#cd $SRC_DIR
 	
-	echo "== Get Glibc (Stop) =="
+	#echo "== Get Glibc (Stop) =="
 }
 
 build_glibc() {
-	echo "== Build Glibc (Start) =="
+	#echo "== Build Glibc (Start) =="
 	
 	# Change Directory to Glibc Work
-	cd core/work/glibc
+	#cd core/work/glibc
 	
 	# Prepare Glibc Work Area
-	rm -rf glibc_objects
-	mkdir glibc_objects
+	#rm -rf glibc_objects
+	#mkdir glibc_objects
 	
 	# Prepare Glibc Install Area & Remember it
-	rm -rf glibc_installed
-	mkdir glibc_installed
-	GLIBC_INSTALLED=$(pwd)/glibc_installed
+	#rm -rf glibc_installed
+	#mkdir glibc_installed
+	#GLIBC_INSTALLED=$(pwd)/glibc_installed
 	
 	# Change Directory to Extracted Archive Folder and Remember it
-	cd $(ls -d linux-*)
-	GLIBC_SRC=$(pwd)
-	cd ..
+	#cd $(ls -d linux-*)
+	#GLIBC_SRC=$(pwd)
+	#cd ..
 	
 	# Change Directory to 'core/work/glibc/glibc_objects'
-	cd glibc_objects
+	#cd glibc_objects
 	
 	# Configure Glibc
-	$GLIBC_SRC/configure \
+	#$GLIBC_SRC/configure \
 		--prefix= \
 		--with-headers=$KERNEL_INSTALLED/include \
 		--without-gd \
@@ -182,41 +182,41 @@ build_glibc() {
 		CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE"
 	
 	# Compile Glibc from Configuration
-	make -j $NUM_JOBS
+	#make -j $NUM_JOBS
 	
 	# Configure Kernel:
-	echo "Adding Extra Kernel Arguments for Configuration..."
-	sed -i "s/.*CONFIG_DEFAULT_HOSTNAME.*/CONFIG_DEFAULT_HOSTNAME=\"awlsomelinux\"/" .config
-	sed -i "s/.*CONFIG_OVERLAY_FS.*/CONFIG_OVERLAY_FS=y/" .config
-	sed -i "s/.*\\(CONFIG_KERNEL_.*\\)=y/\\#\\ \\1 is not set/" .config 
-	sed -i "s/.*CONFIG_KERNEL_XZ.*/CONFIG_KERNEL_XZ=y/" .config
-	sed -i "s/.*CONFIG_FB_VESA.*/CONFIG_FB_VESA=y/" .config
-	sed -i "s/.*CONFIG_LOGO_LINUX_CLUT224.*/CONFIG_LOGO_LINUX_CLUT224=y/" .config
-	sed -i "s/^CONFIG_DEBUG_KERNEL.*/\\# CONFIG_DEBUG_KERNEL is not set/" .config
-	sed -i "s/.*CONFIG_EFI_STUB.*/CONFIG_EFI_STUB=y/" .config
-	grep -q "CONFIG_X86_32=y" .config
-	if [ $? = 1 ] ; then
-		echo "CONFIG_EFI_MIXED=y" >> .config
-	fi
+	#echo "Adding Extra Kernel Arguments for Configuration..."
+	#sed -i "s/.*CONFIG_DEFAULT_HOSTNAME.*/CONFIG_DEFAULT_HOSTNAME=\"awlsomelinux\"/" .config
+	#sed -i "s/.*CONFIG_OVERLAY_FS.*/CONFIG_OVERLAY_FS=y/" .config
+	#sed -i "s/.*\\(CONFIG_KERNEL_.*\\)=y/\\#\\ \\1 is not set/" .config 
+	#sed -i "s/.*CONFIG_KERNEL_XZ.*/CONFIG_KERNEL_XZ=y/" .config
+	#sed -i "s/.*CONFIG_FB_VESA.*/CONFIG_FB_VESA=y/" .config
+	#sed -i "s/.*CONFIG_LOGO_LINUX_CLUT224.*/CONFIG_LOGO_LINUX_CLUT224=y/" .config
+	#sed -i "s/^CONFIG_DEBUG_KERNEL.*/\\# CONFIG_DEBUG_KERNEL is not set/" .config
+	#sed -i "s/.*CONFIG_EFI_STUB.*/CONFIG_EFI_STUB=y/" .config
+	#grep -q "CONFIG_X86_32=y" .config
+	#if [ $? = 1 ] ; then
+	#	echo "CONFIG_EFI_MIXED=y" >> .config
+	#fi
 	
 	# Build Linux Kernel
-	echo "Building Linux Kerne..."
-	make \
+	#echo "Building Linux Kerne..."
+	#make \
 		CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
 		bzImage -j $NUM_JOBS
 		
 	# Install Linux Kernel
-	echo "Installing Linux Kernel..."
-	cp arch/x86/boot/bzImage \
+	#echo "Installing Linux Kernel..."
+	#cp arch/x86/boot/bzImage \
 		$SRC_DIR/core/work/kernel/kernel_ready/kernel
 		
 	# Generate Linux Kernel Header Files
-	echo "Generating Linux Kernel Headers..."
-	make \
+	#echo "Generating Linux Kernel Headers..."
+	#make \
 		INSTALL_HDR_PATH=$SRC_DIR/core/work/kernel/kernel_ready \
 		headers_install -j $NUM_JOBS
 		
-	echo "== Build Kernel (Stop) =="
+	#echo "== Build Kernel (Stop) =="
 }
 
 prepare_glibc() {
