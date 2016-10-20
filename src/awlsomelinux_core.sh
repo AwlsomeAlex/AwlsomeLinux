@@ -26,8 +26,8 @@ NUM_JOBS=$((NUM_CORES * JOB_FACTOR))
 # AwlsomeLinux Main Packages #
 ##############################
 
-KERNEL_DOWNLOAD_URL=http://kernel.org/pub/linux/kernel/v4.x/linux-4.4.25.tar.xz
-KERNEL_ARCHIVE_FILE=${KERNEL_DOWNLOAD_URL##*/}
+LINUX_DOWNLOAD_URL=http://kernel.org/pub/linux/kernel/v4.x/linux-4.4.25.tar.xz
+LINUX_ARCHIVE_FILE=${KERNEL_DOWNLOAD_URL##*/}
 GLIBC_DOWNLOAD_URL=http://ftp.gnu.org/gnu/glibc/glibc-2.24.tar.bz2
 GLIBC_ARCHIVE_FILE=${GLIBC_DOWNLOAD_URL##*/}
 
@@ -45,46 +45,49 @@ GLIBC_ARCHIVE_FILE=${GLIBC_DOWNLOAD_URL##*/}
 # Kernel #
 ##########
 
-get_kernel() {
-	echo "== Get Kernel (Start) =="
+get_linux() {
+	echo "== Get Linux (Start) =="
 	
 	# Change Directory to 'core/source'
 	cd core/source
 	
-	# Download Kernel Version Defined in AwlsomeLinux Main Packages
-	wget -c $KERNEL_DOWNLOAD_URL
+	# Download Kernel Version Defined in AwlsomeLinux Core Packages
+	echo "Downloading Linux Kernel Source Archive..."
+	wget -c $LINUX_DOWNLOAD_URL
 	
-	# Clean out old Kernel Work Directory (If 'make clean' or 'make all' wasn't executed)
-	rm -rf $SRC_DIR/core/work/kernel
-	mkdir $SRC_DIR/core/work/kernel
+	# Clean out old Linux Kernel Work Directory (If 'make clean' or 'make all' wasn't executed)
+	rm -rf $SRC_DIR/core/work/linux
+	mkdir $SRC_DIR/core/work/linux
 	
-	# Extract .xz Archive to 'core/work/kernel'
-	tar -xvf $KERNEL_ARCHIVE_FILE -C $SRC_DIR/core/work/kernel
+	# Extract .xz Archive to 'core/work/linux'
+	echo "Extracting Linux Kernel..."
+	tar -xvf $LINUX_ARCHIVE_FILE -C $SRC_DIR/core/work/linux
 	
 	cd $SRC_DIR
 	
-	echo "== Get Kernel (Stop) =="
+	echo "== Get Linux (Stop) =="
 }
 
-build_kernel() {
-	echo "== Build Kernel (Start) =="
+build_linux() {
+	echo "== Build Linux (Start) =="
 	
-	# Change Directory to Kernel Work
-	cd core/work/kernel
+	# Change Directory to Linux Work
+	cd core/work/linux
+	echo "Preparing Linux Kernel Directories..."
 	
-	# Prepare Kernel Install Area
-	rm -rf $SRC_DIR/core/install/kernel
-	mkdir $SRC_DIR/core/install/kernel
+	# Prepare Linux Install Area
+	rm -rf $SRC_DIR/core/install/linux
+	mkdir $SRC_DIR/core/install/linux
 	
 	# Change Directory to Extracted Archive Folder
 	cd $(ls -d linux-*)
 	
-	# Clean Kernel Configuration
-	echo "Cleaning Kernel Configuration..."
+	# Clean Linux Kernel Configuration
+	echo "Cleaning Linux Kernel Configuration..."
 	make mrproper -j $NUM_JOBS
 	
 	# Create Default Configuration
-	echo "Creating Default Kernel Configuration..."
+	echo "Creating Default Linux Kernel Configuration..."
 	make defconfig -j $NUM_JOBS
 	
 	# Configure Kernel:
@@ -103,7 +106,7 @@ build_kernel() {
 	fi
 	
 	# Build Linux Kernel
-	echo "Building Linux Kerne..."
+	echo "Building Linux Kernel..."
 	make \
 		CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
 		bzImage -j $NUM_JOBS
@@ -111,15 +114,20 @@ build_kernel() {
 	# Install Linux Kernel
 	echo "Installing Linux Kernel..."
 	cp arch/x86/boot/bzImage \
-		$SRC_DIR/core/install/kernel/kernel
+		$SRC_DIR/core/install/linux/kernel
 		
 	# Generate Linux Kernel Header Files
 	echo "Generating Linux Kernel Headers..."
 	make \
-		INSTALL_HDR_PATH=$SRC_DIR/core/install/kernel \
+		INSTALL_HDR_PATH=$SRC_DIR/core/install/linux \
 		headers_install -j $NUM_JOBS
 		
-	echo "== Build Kernel (Stop) =="
+	# Remember Linux Kernel Installed Directory
+	LINUX_INSTALLED=$SRC_DIR/core/install/linux
+	
+	cd $SRC_DIR
+		
+	echo "== Build Linux (Stop) =="
 }
 
 
@@ -129,100 +137,106 @@ build_kernel() {
 #########
 
 get_glibc() {
-	echo "Disabled"
-	#echo "== Get Glibc (Start) =="
+	echo "== Get Glibc (Start) =="
 	
 	# Change Directory to 'core/source'
-	#cd core/source
+	cd core/source
 	
-	# Download Kernel Version Defined in AwlsomeLinux Main Packages
-	#wget -c $GLIBC_DOWNLOAD_URL
+	# Download Glibc Version Defined in AwlsomeLinux Core Packages
+	echo "Downloading Glibc Source Archive..."
+	wget -c $GLIBC_DOWNLOAD_URL
 	
 	# Clean out old Glibc Work Directory (If 'make clean' or 'make all' wasn't executed)
-	#rm -rf ../work/glibc
-	#mkdir ../work/glibc
+	rm -rf $SRC_DIR/core/work/glibc
+	mkdir $SRC_DIR/core/work/glibc
 	
 	# Extract .xz Archive to 'core/work/glibc'
-	#tar -xvf $GLIBC_ARCHIVE_FILE -C ../work/glibc
+	echo "Extracting Glibc..."
+	tar -xvf $GLIBC_ARCHIVE_FILE -C $SRC_DIR/core/work/glibc
 	
-	#cd $SRC_DIR
+	cd $SRC_DIR
 	
-	#echo "== Get Glibc (Stop) =="
+	echo "== Get Glibc (Stop) =="
 }
 
 build_glibc() {
-echo "Disabled"
-	#echo "== Build Glibc (Start) =="
+	echo "== Build Glibc (Start) =="
 	
 	# Change Directory to Glibc Work
-	#cd core/work/glibc
+	cd core/work/glibc
+	echo "Preparing Glibc Directories..."
 	
-	# Prepare Glibc Work Area
-	#rm -rf glibc_objects
-	#mkdir glibc_objects
+	# Change Directory to Extracted Glibc and Remember it
+	cd $(ls -d glibc-*)
+	GLIBC_SRC=$(pwd)
+	cd ..
 	
-	# Prepare Glibc Install Area & Remember it
-	#rm -rf glibc_installed
-	#mkdir glibc_installed
-	#GLIBC_INSTALLED=$(pwd)/glibc_installed
+	# Prepare Glibc Object Work Area
+	rm -rf glibc_objects
+	mkdir glibc_objects
 	
-	# Change Directory to Extracted Archive Folder and Remember it
-	#cd $(ls -d linux-*)
-	#GLIBC_SRC=$(pwd)
-	#cd ..
+	# Prepare Glibc Install Area and Remember it
+	rm -rf $SRC_DIR/core/install/glibc
+	mkdir $SRC_DIR/core/install/glibc
+	GLIBC_INSTALLED=$SRC_DIR/core/install/glibc
 	
-	# Change Directory to 'core/work/glibc/glibc_objects'
-	#cd glibc_objects
+	# Change Directory to Glibc Object Directory
+	cd glibc_objects
 	
-	# Configure Glibc
-	#$GLIBC_SRC/configure \
+	# Configure Glibc:
+	echo "Configuring Glibc..."
+	$GLIBC_SRC/configure \
 		--prefix= \
-		--with-headers=$KERNEL_INSTALLED/include \
+		--with-headers=$LINUX_INSTALLED/include \
 		--without-gd \
 		--without-selinux \
 		--disable-werror \
 		CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE"
 	
-	# Compile Glibc from Configuration
-	#make -j $NUM_JOBS
-	
-	# Configure Kernel:
-	#echo "Adding Extra Kernel Arguments for Configuration..."
-	#sed -i "s/.*CONFIG_DEFAULT_HOSTNAME.*/CONFIG_DEFAULT_HOSTNAME=\"awlsomelinux\"/" .config
-	#sed -i "s/.*CONFIG_OVERLAY_FS.*/CONFIG_OVERLAY_FS=y/" .config
-	#sed -i "s/.*\\(CONFIG_KERNEL_.*\\)=y/\\#\\ \\1 is not set/" .config 
-	#sed -i "s/.*CONFIG_KERNEL_XZ.*/CONFIG_KERNEL_XZ=y/" .config
-	#sed -i "s/.*CONFIG_FB_VESA.*/CONFIG_FB_VESA=y/" .config
-	#sed -i "s/.*CONFIG_LOGO_LINUX_CLUT224.*/CONFIG_LOGO_LINUX_CLUT224=y/" .config
-	#sed -i "s/^CONFIG_DEBUG_KERNEL.*/\\# CONFIG_DEBUG_KERNEL is not set/" .config
-	#sed -i "s/.*CONFIG_EFI_STUB.*/CONFIG_EFI_STUB=y/" .config
-	#grep -q "CONFIG_X86_32=y" .config
-	#if [ $? = 1 ] ; then
-	#	echo "CONFIG_EFI_MIXED=y" >> .config
-	#fi
-	
-	# Build Linux Kernel
-	#echo "Building Linux Kerne..."
-	#make \
-		CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
-		bzImage -j $NUM_JOBS
+	# Build Glibc
+	echo "Building Glibc..."
+	make -j $NUM_JOBS
 		
-	# Install Linux Kernel
-	#echo "Installing Linux Kernel..."
-	#cp arch/x86/boot/bzImage \
-		$SRC_DIR/core/work/kernel/kernel_ready/kernel
+	# Install Glibc
+	echo "Installing Glibc..."
+	make install \
+		DESTDIR=$GLIBC_INSTALLED \
+		-j $NUM_JOBS
 		
-	# Generate Linux Kernel Header Files
-	#echo "Generating Linux Kernel Headers..."
-	#make \
-		INSTALL_HDR_PATH=$SRC_DIR/core/work/kernel/kernel_ready \
-		headers_install -j $NUM_JOBS
+	cd $SRC_DIR
 		
-	#echo "== Build Kernel (Stop) =="
+	echo "== Build Glibc (Stop) =="
 }
 
 prepare_glibc() {
-	echo "Prepare Glibc"
+	
+	echo "== Prepare Glibc (Start) =="
+	
+	# Change Directory to Glibc Installed
+	cd core/install
+	
+	# Prepare Glibc
+	echo "Preparing Glibc..."
+	rm -rf glibc_prepared
+	cp -r glibc glibc_prepared
+	
+	# Change Directory to Glibc Prepared
+	cd glibc_prepared
+	
+	# Create a /usr directory and link it with Kernel Headers + Functions
+	mkdir -p usr
+	cd usr
+	ln -s ../include include
+	ln -s ../lib lib
+	cd ../include
+	ln -s $LINUX_INSTALLED/include/linux linux
+	ln -s $LINUX_INSTALLED/include/asm asm
+	ln -s $LINUX_INSTALLED/include/asm-generic asm-generic
+	ln -s $LINUX_INSTALLED/include/mtd mtd
+	
+	cd $SRC_DIR
+	
+	echo "== Prepare Glibc (Stop) =="
 }
 
 
@@ -267,5 +281,8 @@ get_syslinux() {
 	echo "Get Syslinux"
 }
 
-get_kernel
-build_kernel
+get_linux
+build_linux
+get_glibc
+build_glibc
+prepare_glibc
