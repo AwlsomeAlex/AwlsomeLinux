@@ -129,6 +129,7 @@ build_kernel() {
 #########
 
 get_glibc() {
+	echo "Disabled"
 	#echo "== Get Glibc (Start) =="
 	
 	# Change Directory to 'core/source'
@@ -150,6 +151,7 @@ get_glibc() {
 }
 
 build_glibc() {
+echo "Disabled"
 	#echo "== Build Glibc (Start) =="
 	
 	# Change Directory to Glibc Work
