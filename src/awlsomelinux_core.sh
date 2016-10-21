@@ -30,8 +30,8 @@ LINUX_DOWNLOAD_URL=http://kernel.org/pub/linux/kernel/v4.x/linux-4.4.25.tar.xz
 LINUX_ARCHIVE_FILE=${LINUX_DOWNLOAD_URL##*/}
 GLIBC_DOWNLOAD_URL=http://ftp.gnu.org/gnu/glibc/glibc-2.24.tar.bz2
 GLIBC_ARCHIVE_FILE=${GLIBC_DOWNLOAD_URL##*/}
-
-
+BUSYBOX_DOWNLOAD_URL=http://busybox.net/downloads/busybox-1.25.1.tar.bz2
+BUSYBOX_ARCHIVE_FILE=${BUSYBOX_DOWNLOAD_URL##*/}
 
 ############################
 # ------------------------ #
@@ -220,8 +220,9 @@ prepare_glibc() {
 	rm -rf glibc_prepared
 	cp -r glibc glibc_prepared
 	
-	# Change Directory to Glibc Prepared
+	# Change Directory to Glibc Prepared and Remember it
 	cd glibc_prepared
+	GLIBC_PREPARED=$(pwd)
 	
 	# Create a /usr directory and link it with Kernel Headers + Functions
 	mkdir -p usr
@@ -246,11 +247,62 @@ prepare_glibc() {
 ###################
 
 get_busybox() {
-	echo "Get Busybox"
+	echo "== Get Busybox (Start) =="
+	
+	# Change Directory to 'core/source'
+	cd core/source
+	
+	# Download Busybox Version Defined in AwlsomeLinux Core Packages
+	echo "Downloading Busybox Source Archive..."
+	wget -c $BUSYBOX_DOWNLOAD_URL
+	
+	# Clean out old Busybox Work Directory (If 'make clean' or 'make all' wasn't executed)
+	rm -rf $SRC_DIR/core/work/busybox
+	mkdir $SRC_DIR/core/work/busybox
+	
+	# Extract .xz Archive to 'core/work/busybox'
+	echo "Extracting Busybox..."
+	tar -xvf $BUSYBOX_ARCHIVE_FILE -C $SRC_DIR/core/work/busybox
+	
+	cd $SRC_DIR
+	
+	echo "== Get Busybox (Stop) =="
 }
 
 build_busybox() {
-	echo "Build Busybox"
+	echo "== Build Busybox (Start) =="
+	
+	# Change Directory to Busybox Work
+	cd core/work/busybox
+	echo "Preparing Busybox Directories..."
+	
+	# Change Directory to Extracted Busybox
+	cd $(ls -d busybox-*)
+	
+	# Clean Busybox Configuration
+	echo "Preparing Busybox..."
+	make distclean -j $NUM_JOBS
+	
+	# Generate Busybox Default Configuration
+	echo "Generating Busybox Configuration File..."
+	make defconfig -j $NUM_JOBS
+	sed -i "s/.*CONFIG_INETD.*/CONFIG_INETD=n/" .config
+	
+	# Build Busybox
+	echo "Building Busybox..."
+	make \
+		EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORITFY_SOURCE" \
+		busybox -j $NUM_JOBS
+		
+	# Install Busybox
+	echo "Installing Busybox..."
+	make \
+		CONFIG_PREFIX="$SRC_DIR/core/install/busybox"
+		install -j $NUM_JOBS
+		
+	cd $SRC_DIR
+		
+	echo "== Build Busybox (Stop) =="
 }
 
 
