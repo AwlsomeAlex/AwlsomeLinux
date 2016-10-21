@@ -297,7 +297,7 @@ build_busybox() {
 	# Install Busybox
 	echo "Installing Busybox..."
 	make \
-		CONFIG_PREFIX="$SRC_DIR/core/install/busybox"
+		CONFIG_PREFIX="$SRC_DIR/core/install/busybox" \
 		install -j $NUM_JOBS
 		
 	cd $SRC_DIR
