@@ -301,6 +301,11 @@ build_busybox() {
 		install -j $NUM_JOBS
 		
 	cd $SRC_DIR
+	
+	# Change Directory and Remember Busybox Install Area
+	cd core/install/busybox
+	BUSYBOX_INSTALLED=$(pwd)
+	cd $SRC_DIR
 		
 	echo "== Build Busybox (Stop) =="
 }
@@ -312,25 +317,103 @@ build_busybox() {
 ###################
 
 prepare_src() {
-	echo "Prepare Source Code"
+	echo "== Prepare Source (Start) =="
+	
+	# Change Directory to 'core'
+	cd core
+	
+	echo "Preparing AwlsomeLinux Source Files..."
+	
+	# Clean out old Src Directory (If 'make clean' or 'make all' wasn't executed)
+	rm -rf src
+	mkdir src
+	
+	# Copy all Source files/directories to 'core/src'
+	cp ../*.sh src
+	cp ../makefile src
+	cp ../README src
+	cp ../overlay src
+	cp ../core src
+	
+	# Delete '.gitignore' files used to make folders appear in git.
+	find * -type f -name '.gitignore' -exec rm {} +
+	
+	cd $SRC_DIR
+	
+	echo "== Prepare Source (Stop) =="
 }
 
-generate_rootfs() {
-	echo "Generate RootFS"
+generate_core() {
+	echo "== Prepare Core InitramFS (Start) =="
+	
+	# Change Directory to 'core'
+	cd core
+	
+	# Prepare InitramFS Area
+	echo "Preparing InitramFS Area..."
+	rm -rf core
+	cp -r $BUSYBOX_INSTALLED core
+	cp -r src/rootfs/* core
+	
+	# Change Directory to InitramFS 'core/core'
+	cd core
+	
+	# Prepare Directories in InitramFS
+	rm -f linuxrc
+	cp -r ../src usr/src
+	
+	BUSYBOX_ARCH=$(file bin/busybox | cut -d' '  -f3)
+	if [ "$BUSYBOX_ARCH" = "64-bit" ] ; then
+		mkdir lib64
+		cp $GLIBC_PREPARED/lib/ld-linux* lib64
+		echo "Dynamic loader is accessed via '/lib64'."
+	else
+		cp $GLIBC_PREPARED/lib/ld-linux* lib
+		echo "Dynamic loader is accessed via '/lib'."
+	fi
+
+	# Copy all necessary Glibc Libraries to '/lib'
+	cp $GLIBC_PREPARED/lib/libm.so.6 lib
+	cp $GLIBC_PREPARED/lib/libc.so.6 lib
+	cp $GLIBC_PREPARED/lib/libresolv.so.2 lib
+	cp $GLIBC_PREPARED/lib/libnss_dns.so.2 lib
+	echo "All Directories have been prepared."
+	
+	# Reduce size of Libraries and Executables
+	strip -g \
+		$SRC_DIR/core/core/bin/* \
+		$SRC_DIR/core/core/sbin/* \
+		$SRC_DIR/core/core/lib/* \
+		2>/dev/null
+	echo "Reduced size of Libraries and Executables."
+	
+	cd $SRC_DIR
+	
+	echo "== Prepare Core InitramFS (Stop) =="
+	
 }
 
-pack_rootfs() {
-	echo "Pack RootFS"
-}
-
-
-
-####################
-# Extract Syslinux #
-####################
-
-get_syslinux() {
-	echo "Get Syslinux"
+pack_core() {
+	echo "== Pack Core InitramFS (Start) =="
+	
+	# Change Directory to 'core'
+	cd core
+	
+	echo "Packing InitramFS..."
+	
+	# Remove old InitramFS
+	rm -f core.cpio.gz
+	
+	cd core
+	
+	# Pack InitramFS Folder in a 'cpio.xz' archive
+	find . | cpio -R root:root -H newc -o | xz -9 --check=none > ../core.cpio.xz
+	
+	echo "InitramFS has been packed."
+	
+	cd $SRC_DIR
+	
+	echo "== Pack Core InitramFS (Stop) =="
 }
 
 get_linux
@@ -347,3 +430,8 @@ get_busybox
 
 build_busybox
 
+prepare_src
+
+generate_core
+
+pack_core
