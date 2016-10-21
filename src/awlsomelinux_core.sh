@@ -330,10 +330,11 @@ prepare_src() {
 	
 	# Copy all Source files/directories to 'core/src'
 	cp ../*.sh src
-	cp ../makefile src
+	cp ../Makefile src
 	cp ../README src
-	cp ../overlay src
-	cp ../core src
+	cp -r ../overlay src
+	cp -r ../core src
+	cp -r rootfs src
 	
 	# Delete '.gitignore' files used to make folders appear in git.
 	find * -type f -name '.gitignore' -exec rm {} +
