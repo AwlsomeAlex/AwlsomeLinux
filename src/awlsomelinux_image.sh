@@ -40,12 +40,12 @@ get_syslinux() {
 	wget -c $SYSLINUX_DOWNLOAD_URL
 	
 	# Clean out old SYSLINUX Directory (If 'make clean' or 'make all' wasn't executed)
-	rm -rf SYSLINUX
-	mkdir SYSLINUX
+	rm -rf syslinux
+	mkdir syslinux
 	
 	# Extract .xz Archive to 'isoimage/SYSLINUX'
 	echo "Extracting SYSLINUX..."
-	tar -xvf $SYSLINUX_ARCHIVE_FILE -C $SRC_DIR/isoimage/SYSLINUX
+	tar -xvf $SYSLINUX_ARCHIVE_FILE -C $SRC_DIR/isoimage/syslinux
 	
 	cd $SRC_DIR
 	
@@ -60,10 +60,11 @@ get_syslinux() {
 
 prepare_imagedir() {
 	echo "== Prepare Image Directory (Start) =="
+	
 	# Change Directory to SYSLINUX and Remember it
-	cd isoimage/SYSLINUX
+	cd isoimage/syslinux
 	cd $(ls -d *)
-	SYSLINUX_DIR=$(pwd)
+	WORK_SYSLINUX_DIR=$(pwd)
 	cd $SRC_DIR
 	
 	# Remove old AwlsomeLinux Image
@@ -106,6 +107,8 @@ generate_overlayfs() {
 generate_image() {
 	echo "== Generate Image (Start) =="
 	
+	cd $SRC_DIR
+	
 	# Change Directory to 'isoimage/image'
 	cd isoimage/image
 	
@@ -113,7 +116,7 @@ generate_image() {
 	cp $LINUX_INSTALLED/kernel ./kernel.xz
 	
 	# Copy RootFS to AwlsomeLinux Image
-	cp ../core/core/core.cpio.xz ./core.xz
+	cp $SRC_DIR/core/core.cpio.xz ./core.xz
 	
 	# Copy OverlayFS to AwlsomeLinux Image
 	mkdir -p overlay/rootfs
@@ -122,8 +125,8 @@ generate_image() {
 	cp -rf $SRC_DIR/overlay/overlayfs/* overlay/rootfs
 	
 	# Copy 'isolinux.bin' and 'ldlinux.c32' to AwlsomeLinux Image
-	cp $SYSLINUX_DIR/bios/core/isolinux.bin .
-	cp $SYSLINUX_DIR/bios/com32/elflink/ldlinux/ldlinux.c32 .
+	cp $WORK_SYSLINUX_DIR/bios/core/isolinux.bin .
+    cp $WORK_SYSLINUX_DIR/bios/com32/elflink/ldlinux/ldlinux.c32 .
 	
 	# Create ISOLINUX Configuration File
 	echo 'default kernel.xz initrd=core.xz vga=ask' > ./syslinux.cfg
@@ -147,6 +150,7 @@ CEOF
 		-no-emul-boot \
 		-boot-load-size 4 \
 		-boot-info-table \
+		-joliet-long \
 		./
 		
 	# Make AwlsomeLinux Image Bootable on USB Flash Drives
@@ -169,8 +173,8 @@ CEOF
 }
 get_syslinux
 
-generate_image
+prepare_imagedir
 
 generate_overlayfs
 
-prepare_imagedir
+generate_image

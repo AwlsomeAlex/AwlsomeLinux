@@ -9,7 +9,8 @@
 
 all: clean
 	@echo "Executing the main AwlsomeLinux Core Creation Script..."
-	@time sh awlsomelinux_core.sh 2>&1 | tee awlsomelinux.log
+	@time sh awlsomelinux_core.sh 2>&1 | tee awlsomelinux_core.log
+	@time sh awlsomelinux_image.sh 2>&1 | tee awlsomelinux_image.log
 
 clean:
 	@echo "Removing AwlsomeLinux Core Packages' Source Archives..."
@@ -24,7 +25,7 @@ clean:
 	@echo "Removing Pre-Generated AwlsomeLinux ISO Image..."
 	@rm -rf awlsomelinux.iso
 	@echo "Removing AwlsomeLinux Image Directory Content..."
-	@rm -rf image/*
+	@rm -rf isoimage/*
 	@echo "Removing AwlsomeLinux Overlay Packages' Source Archives..."
 	@rm -rf overlay/source
 	@mkdir overlay/source
@@ -35,7 +36,8 @@ clean:
 	@rm -rf overlay/install
 	@mkdir overlay/install
 	@echo "Remvoing AwlsomeLinux Build Log File..."
-	@rm -rf awlsomelinux.log
+	@rm -rf awlsomelinux_core.log
+	@rm -rf awlsomelinux_image.log
 
 qemu:
 
