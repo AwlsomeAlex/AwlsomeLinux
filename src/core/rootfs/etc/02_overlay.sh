@@ -41,9 +41,9 @@ echo "Created folders for all critical file systems."
 echo "Copying the root file system to /mnt..."
 cp -a bin etc lib lib64 root sbin src usr var /mnt 2>/dev/null
 
-DEFAULT_OVERLAY_DIR="/tmp/minimal/overlay"
-DEFAULT_UPPER_DIR="/tmp/minimal/rootfs"
-DEFAULT_WORK_DIR="/tmp/minimal/work"
+DEFAULT_OVERLAY_DIR="/tmp/overlay/overlay"
+DEFAULT_UPPER_DIR="/tmp/overlay/rootfs"
+DEFAULT_WORK_DIR="/tmp/overlay/work"
 
 echo "Searching available devices for overlay content..."
 for DEVICE in /dev/* ; do
@@ -67,38 +67,38 @@ for DEVICE in /dev/* ; do
   WORK_DIR=""
 
   mount $DEVICE $DEVICE_MNT 2>/dev/null
-  if [ -d $DEVICE_MNT/minimal/rootfs -a -d $DEVICE_MNT/minimal/work ] ; then
+  if [ -d $DEVICE_MNT/overlay/rootfs -a -d $DEVICE_MNT/overlay/work ] ; then
     # folder
-    echo "  Found '/minimal' folder on device '$DEVICE'."
-    touch $DEVICE_MNT/minimal/rootfs/minimal.pid 2>/dev/null
-    if [ -f $DEVICE_MNT/minimal/rootfs/minimal.pid ] ; then
+    echo "  Found '/overlay' folder on device '$DEVICE'."
+    touch $DEVICE_MNT/overlay/rootfs/minimal.pid 2>/dev/null
+    if [ -f $DEVICE_MNT/overlay/rootfs/minimal.pid ] ; then
       # read/write mode
       echo "  Device '$DEVICE' is mounted in read/write mode."
 
-      rm -f $DEVICE_MNT/minimal/rootfs/minimal.pid
+      rm -f $DEVICE_MNT/overlay/rootfs/minimal.pid
 
       OVERLAY_DIR=$DEFAULT_OVERLAY_DIR
       OVERLAY_MNT=$DEVICE_MNT
-      UPPER_DIR=$DEVICE_MNT/minimal/rootfs
-      WORK_DIR=$DEVICE_MNT/minimal/work
+      UPPER_DIR=$DEVICE_MNT/overlay/rootfs
+      WORK_DIR=$DEVICE_MNT/overlay/work
     else
       # read only mode
       echo "  Device '$DEVICE' is mounted in read only mode."
 
-      OVERLAY_DIR=$DEVICE_MNT/minimal/rootfs
+      OVERLAY_DIR=$DEVICE_MNT/overlay/rootfs
       OVERLAY_MNT=$DEVICE_MNT
       UPPER_DIR=$DEFAULT_UPPER_DIR
       WORK_DIR=$DEFAULT_WORK_DIR
     fi
-  elif [ -f $DEVICE_MNT/minimal.img ] ; then
+  elif [ -f $DEVICE_MNT/overlay.img ] ; then
     #image
-    echo "  Found '/minimal.img' image on device '$DEVICE'."
+    echo "  Found '/overlay.img' image on device '$DEVICE'."
 
     mkdir -p /tmp/mnt/image
     IMAGE_MNT=/tmp/mnt/image
 
     LOOP_DEVICE=$(losetup -f)
-    losetup $LOOP_DEVICE $DEVICE_MNT/minimal.img
+    losetup $LOOP_DEVICE $DEVICE_MNT/overlay.img
 
     mount $LOOP_DEVICE $IMAGE_MNT
     if [ -d $IMAGE_MNT/rootfs -a -d $IMAGE_MNT/work ] ; then
