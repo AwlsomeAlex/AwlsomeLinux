@@ -399,15 +399,12 @@ pack_core() {
 	echo "== Pack Core InitramFS (Start) =="
 	
 	# Change Directory to 'core'
-	cd core
-	
-	echo "Packing InitramFS..."
+	cd core/core
 	
 	# Remove old InitramFS
+	echo "Packing InitramFS..."
 	rm -f core.cpio.gz
-	
-	cd core
-	
+		
 	# Pack InitramFS Folder in a 'cpio.xz' archive
 	find . | cpio -R root:root -H newc -o | xz -9 --check=none > ../core.cpio.xz
 	
