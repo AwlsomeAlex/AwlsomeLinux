@@ -316,33 +316,33 @@ build_busybox() {
 # RootFS Creation #
 ###################
 
-prepare_src() {
-	echo "== Prepare Source (Start) =="
+#prepare_src() {
+#	echo "== Prepare Source (Start) =="
 	
 	# Change Directory to 'core'
-	cd core
+#	cd core
 	
-	echo "Preparing AwlsomeLinux Source Files..."
+#	echo "Preparing AwlsomeLinux Source Files..."
 	
 	# Clean out old Src Directory (If 'make clean' or 'make all' wasn't executed)
-	rm -rf src
-	mkdir src
+#	rm -rf src
+#	mkdir src
 	
 	# Copy all Source files/directories to 'core/src'
-	cp ../*.sh src
-	cp ../Makefile src
-	cp ../README src
-	cp -r ../overlay src
-	cp -r ../core src
-	cp -r rootfs src
+#	cp ../*.sh src
+#	cp ../Makefile src
+#	cp ../README src
+#	cp -r ../overlay src
+#	cp -r ../core src
+#	cp -r rootfs src
 	
 	# Delete '.gitignore' files used to make folders appear in git.
-	find * -type f -name '.gitignore' -exec rm {} +
+#	find * -type f -name '.gitignore' -exec rm {} +
 	
-	cd $SRC_DIR
+#	cd $SRC_DIR
 	
-	echo "== Prepare Source (Stop) =="
-}
+#	echo "== Prepare Source (Stop) =="
+#}
 
 generate_core() {
 	echo "== Prepare Core InitramFS (Start) =="
@@ -354,14 +354,15 @@ generate_core() {
 	echo "Preparing InitramFS Area..."
 	rm -rf core
 	cp -r $BUSYBOX_INSTALLED core
-	cp -r src/rootfs/* core
+#	cp -r src/rootfs/* core
+	cp -r rootfs/* core
 	
 	# Change Directory to InitramFS 'core/core'
 	cd core
 	
 	# Prepare Directories in InitramFS
 	rm -f linuxrc
-	cp -r ../src usr/src
+#	cp -r ../src usr/src
 	
 	BUSYBOX_ARCH=$(file bin/busybox | cut -d' '  -f3)
 	if [ "$BUSYBOX_ARCH" = "64-bit" ] ; then
@@ -431,7 +432,7 @@ get_busybox
 
 build_busybox
 
-prepare_src
+#prepare_src
 
 generate_core
 
