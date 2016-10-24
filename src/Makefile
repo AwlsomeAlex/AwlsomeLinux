@@ -8,8 +8,29 @@
 .DEFAULT_GOAL := help
 
 all: clean
-	@echo "Executing the main AwlsomeLinux Core Creation Script..."
+	@echo "Executing AwlsomeLinux Creation Scripts..."
 	@time sh awlsomelinux_core.sh 2>&1 | tee awlsomelinux_core.log
+	@time sh awlsomelinux_image.sh 2>&1 | tee awlsomelinux_image.log
+	
+core:
+	@echo "Cleaning Out Core Directories Only..."
+	@rm -rf core/source
+	@mkdir core/source
+	@rm -rf core/work
+	@mkdir core/work
+	@rm -rf core/install
+	@mkdir core/install
+	@rm -rf awlsomelinux.iso
+	@rm -rf awlsomelinux_core.log
+	@echo "Executing AwlsomeLinux Core Creation Script Only..."
+	@time sh awlsomelinux_core.sh 2>&1 | tee awlsomelinux_core.log
+	
+image:
+	@echo "Cleaning Out Image Directory Only..."
+	@rm -rf isoimage/*
+	@rm -rf awlsomelinux.iso
+	@rm -rf awlsomelinux_image.log
+	@echo "Executing AwlsomeLinux Image Creation Script Only..."
 	@time sh awlsomelinux_image.sh 2>&1 | tee awlsomelinux_image.log
 
 clean:
@@ -39,11 +60,15 @@ clean:
 	@rm -rf awlsomelinux_core.log
 	@rm -rf awlsomelinux_image.log
 
-qemu:
-
-
-src:
-
+qemu64:
+	@if [ ! -f ./awlsomelinux.iso ]; then echo "AwlsomeLinux Image not found. Please run 'make all'"; exit 1; fi
+	@echo "Launching QEMU..."
+	@qemu-system-x86_64 -m 256M -cdrom awlsomelinux.iso -boot d -vga std
+	
+qemu32:
+	@if [ ! -f ./awlsomelinux.iso ]; then echo "AwlsomeLinux Image not found. Please run 'make all'"; exit 1; fi
+	@echo "Launching QEMU..."
+	@qemu-system-i386 -m 256M -cdrom awlsomelinux.iso -boot d -vga std
 
 help:
 	@echo ""
