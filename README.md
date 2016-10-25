@@ -4,11 +4,8 @@ Creating a Linux Distributon Seemed to be an impossible task, where only the hug
 
 ![AwlsomeLinux](https://github.com/AwlsomeAlex/AwlsomeLinux/blob/master/AwlsomeLinux.png?raw=true)
 
-## NEWS: **A Rewrite is needed...**
-Well as quickly as I created AwlsomeLinux, I didn't expect it to be this disorganized and cluddered, so I've decided to rewite AwlsomeLinux **COMPLETELY**, hoping to break away from any ties drawing me towards Minimal Linux Live as well, not due to it being a bad thing or anything, but it's just too complicated for what I want, so instead of simplifying the process, i'm remaking it. This is how it will be designed:
-* A Core Directory & Build Script (Makes Linux Kernel, Busybox and Glibc)
-* An Image Directory & Build Script (Gets Syslinux and Makes ISO Image)
-* An Overlay Directory & Buidl Script **[TBD]** (*Possible Idea:* Gets Overlay Scripts from seperate repository and compiles them.)
+## NEWS: **A "short" break.**
+After the week of rewritting I just had, I will be taking a very short break away from AwlsomeLinux, so don't expect much to happen, but as soon as I return, the Overlay Generation Script will be completed. Due to no Crew in November, I hope to work on the AMPM "Another Minimal Package Manager" project and get some packages implemented, along with having a usable GUI for AwlsomeLinux with the help of either 'xvesa' and 'fltk' or 'xorg' and 'xfreedesktop'. 
 
 ## What is AwlsomeLinux?
 Right now, AwlsomeLinux is a minimal, almost installable, and text-based Linux Environment (Wouldn't call it a Distro yet...) which has the following features:
