@@ -79,6 +79,8 @@ prepare_imagedir() {
 #	echo "Source Directory has been copied to AwlsomeLinux Image.
 	mkdir isoimage/image
 	
+	cd $SRC_DIR
+	
 	echo "== Prepare Image Directory (Stop) =="
 }
 
