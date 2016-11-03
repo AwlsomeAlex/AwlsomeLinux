@@ -95,7 +95,7 @@ generate_overlayfs() {
 	
 	# Execute AwlsomeLinux Image Script
 	echo "Generating OverlayFS..."
-	time sh awlsomelinux_overlay.sh
+	time sh awlsomelinux_overlay.sh 2>&1 | tee awlsomelinux_overlay.log
 	
 	echo "== Prepare OverlayFS (Stop) =="
 }

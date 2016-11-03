@@ -33,6 +33,15 @@ image:
 	@echo "Executing AwlsomeLinux Image Creation Script Only..."
 	@time sh awlsomelinux_image.sh 2>&1 | tee awlsomelinux_image.log
 
+overlay:
+	@echo "Cleaning Out Overlay Directory Only..."
+	@rm -rf overlay/*
+	@rm -rf awlsomelinux_overlay.log
+	@mkdir overlay/work overlay/source overlay/install
+	@mkdir overlay/install/usr
+	@echo "Executing AwlsomeLinux Overlay Creation Script Only..."
+	@time sh awlsomelinux_overlay.sh 2>&1 | tee awlsomelinux_overlay.log
+
 clean:
 	@echo "Removing AwlsomeLinux Core Packages' Source Archives..."
 	@rm -rf core/source
