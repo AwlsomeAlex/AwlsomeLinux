@@ -40,7 +40,9 @@ install_glibc() {
 	rm -rf overlay/work/glibc
 	rm -rf overlay/install/glibc
 	mkdir overlay/work/glibc
+	mkdir overlay/work/glibc/lib
 	mkdir overlay/install/glibc
+	mkdir overlay/install/glibc/lib
 	
 	# Change Directory to 'core/install/glibc_prepared/lib'
 	cd core/install/glibc_prepared/lib
