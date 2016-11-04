@@ -124,7 +124,7 @@ generate_image() {
 	mkdir -p overlay/rootfs
 	mkdir -p overlay/work
 	
-	cp -rf $SRC_DIR/overlay/overlayfs/* overlay/rootfs
+	cp -rf $SRC_DIR/overlay/install/* overlay/rootfs
 	
 	# Copy 'isolinux.bin' and 'ldlinux.c32' to AwlsomeLinux Image
 	cp $WORK_SYSLINUX_DIR/bios/core/isolinux.bin .

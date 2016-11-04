@@ -38,13 +38,14 @@ install_glibc() {
 	
 	# Prepare GLIBC Full Installation Work Area
 	rm -rf overlay/work/glibc
+	mkdir overlay/work/glibc
 	mkdir overlay/work/glibc/lib
 	
-	# Change Directory to 'overlay/work/glibc/lib'
-	cd overlay/work/glibc/lib
+	# Change Directory to 'core/install/glibc_prepared/lib'
+	cd core/install/glibc_prepared/lib
 	
 	# Copy all GLIBC Libraries to OverlayFS
-	find . -type l -exec cp {} $SRC_DIR/core/install/glibc/lib \;
+	find . -type l -exec cp {} $SRC_DIR/overlay/work/glibc/lib \;
 	echo "All GLIBC Libraries have been copied."
 	
 	cd $SRC_DIR/overlay/work/glibc/lib
@@ -64,12 +65,12 @@ install_glibc() {
 	strip -g *
 	echo "All Libraries have been reduced in File Size."
 	
-	cp -r $SRC_DIR/overlay/work/glibc/lib $SRC_DIR/overlay/install/usr/lib
+	cp -r $SRC_DIR/overlay/work/glibc/lib $SRC_DIR/overlay/install/lib
 	echo "GLIBC Full Installation has been installed to the OverlayFS."
 	
 	cd $SRC_DIR
 	
-	echo "--GLIBC Full Installation Stop ---"
+	echo "--- GLIBC Full Installation Stop ---"
 }
 
 install_glibc
