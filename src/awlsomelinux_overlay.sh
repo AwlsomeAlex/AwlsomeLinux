@@ -65,7 +65,7 @@ install_glibc() {
 	strip -g *
 	echo "All Libraries have been reduced in File Size."
 	
-	cp -r $SRC_DIR/overlay/work/glibc/lib $SRC_DIR/overlay/install/lib
+	cp -r $SRC_DIR/overlay/work/glibc/lib $SRC_DIR/overlay/install/glibc/lib
 	echo "GLIBC Full Installation has been installed to the OverlayFS."
 	
 	cd $SRC_DIR
@@ -73,4 +73,28 @@ install_glibc() {
 	echo "--- GLIBC Full Installation Stop ---"
 }
 
+
+
+######################
+# OverlayFS Creation #
+######################
+overlayfs_create() {
+	
+	# Clean OverlayFS Directory
+	rm -rf $SRC_DIR/overlay/overlayfs
+	mkdir $SRC_DIR/overlay/overlayfs
+
+	# Copy Packages to OverlayFS
+	cp -r $SRC_DIR/overlay/install/glibc/* $SRC_DIR/overlay/overlayfs
+	
+	echo "The OverlayFS Directory has been created."
+	
+	cd $SRC_DIR
+	
+}
+
+
+
 install_glibc
+
+overlayfs_create
