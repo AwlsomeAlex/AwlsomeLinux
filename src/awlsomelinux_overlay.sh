@@ -68,7 +68,7 @@ install_glibc() {
 	strip -g *
 	echo "All Libraries have been reduced in File Size."
 	
-	cp -r $SRC_DIR/overlay/work/glibc/lib $SRC_DIR/overlay/install/glibc/lib
+	cp -r $SRC_DIR/overlay/work/glibc/lib $SRC_DIR/overlay/install/glibc
 	echo "GLIBC Full Installation has been installed to the OverlayFS."
 	
 	cd $SRC_DIR
