@@ -80,6 +80,8 @@ install_glibc() {
 ######################
 overlayfs_create() {
 	
+	echo "--- OverlayFS Creation Start ---"
+	
 	# Clean OverlayFS Directory
 	rm -rf $SRC_DIR/overlay/overlayfs
 	mkdir $SRC_DIR/overlay/overlayfs
@@ -90,6 +92,9 @@ overlayfs_create() {
 	echo "The OverlayFS Directory has been created."
 	
 	cd $SRC_DIR
+	
+	echo "--- OverlayFS Creation Stop ---"
+	
 	
 }
 
