@@ -1,19 +1,15 @@
-# AwlsomeLinux (Fork of Minimal Linux Live)
+# AwlsomeLinux (Old Repository)
 
-Creating a Linux Distributon Seemed to be an impossible task, where only the huge people like Debian or Fedora could make them, or the best you can do is remix Ubuntu and hope it contents that urge of making something. However, thanks to Ivandavidov's Minimal Linux Live Project (https://github.com/ivandavidov/minimal) that dream is a reality for me. 
+Welcome to the Old Repository of AwlsomeLinux. This repository is full of scripts which can be compared to Ivandavidov's Minimal Linux Live, so this might be a good reference if you'd like to simplify his work, otherwise this will just collect dust, for there is no more use for it. :(
 
-![AwlsomeLinux](https://github.com/AwlsomeAlex/AwlsomeLinux/blob/master/AwlsomeLinux.png?raw=true)
-
-## What is AwlsomeLinux?
-Right now, AwlsomeLinux is a minimal, almost installable, and text-based Linux Environment (Wouldn't call it a Distro yet...) which has the following features:
-* The Latest Long-Term-Support Linux Kernel (4.4.x)
-* The Latest Stable BusyBox (1.25.x Stable)
-* The Latest Glibc (2.24)
-
-**Extra Packages Such As:**
-* Links 2.13 (Text-Based Web Browser)
-* Dropbear 2016.74 (Shell SSH)
-* Nano 2.6.3 (Alternative Text Editor)
+## Packages:
+* Linux Kernel (4.4.30) **[Last Update due to the fix of the Dirty Cow Vulnerability]**
+* Busybox (1.25.1)
+* Glibc (2.24)
+* Overlay - Links 2.13
+* Overlay - Dropbear 2016.74
+* Overlay - Ncurses 6.0
+* Overlay - Nano 2.6.3
 
 ## Contributors:
 * AwlsomeAlex (Creator of AwlsomeLinux)
