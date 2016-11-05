@@ -14,6 +14,13 @@ Right now, AwlsomeLinux is a minimal, almost installable, and text-based Linux E
 * The Latest Glibc (2.24)
 * OverlayFS Support (Read-Only for ISO / Read-Write for USB)
 
+## Dependencies:
+* build-essential, wget, make, gawk, gcc, bc, syslinux, genisoimage (Ubuntu-Based Distributions)
+* (More Distribution Support Coming Soon!)
+
+## How to Build:
+* 'make all' - Completely Compiles AwlsomeLinux, simple as that!
+
 ## Credits:
 * AwlsomeAlex (Creator of AwlsomeLinux)
 * Ivandavidov (Creator of Minimal Linux Live) [AwlsomeLinux is based on it.]
