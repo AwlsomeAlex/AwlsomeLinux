@@ -1,6 +1,6 @@
-# AwlsomeLinux
+# AwlsomeLinux (RootFS Rewrite Branch)
 
-Creating a Linux Distributon Seemed to be an impossible task, where only the huge people like Debian or Fedora could make them, or the best you can do is remix Ubuntu and hope it contents that urge of making something. However, thanks to Ivandavidov's Minimal Linux Live Project (https://github.com/ivandavidov/minimal) that dream is a reality for me. 
+This branch for AwlsomeLinux is specifically for the use of rewritting the RootFS Busybox Init System, not that anything is wrong with it, but I feel it can be further simplified, along with user creation and timezone generation can be configured during the ISO Creation, due to it only being able to be configured when Glibc is being built.
 
 ![AwlsomeLinux](https://github.com/AwlsomeAlex/AwlsomeLinux/blob/master/AwlsomeLinux_nov-04-2016.png?raw=true)
 
@@ -9,7 +9,7 @@ Welcome to AwlsomeLinux, a small embedded Linux Distribution that you can "Mostl
 
 ## What is AwlsomeLinux?
 Right now, AwlsomeLinux is a minimal, almost installable, and text-based Linux Environment which has the following features:
-* The Latest Long-Term-Support Linux Kernel (4.4.x)
+* The Latest Long-Term-Support Linux Kernel (4.x.x) **[Next Linux Kernel to become LTS]**
 * The Latest Stable BusyBox (1.25.x Stable)
 * The Latest Glibc (2.24)
 * OverlayFS Support (Read-Only for ISO / Read-Write for USB)
