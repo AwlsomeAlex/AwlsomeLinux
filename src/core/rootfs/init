@@ -25,10 +25,9 @@
 #                       |
 #                       +--(3) /bin/login (Alt + F4 [PUBLIC RELEASES ONLY])
 
-echo -e "AwlsomeLinux Initialization (release 0.1a)"
+echo -e "\e[1;7mAwlsomeLinux Initialization (Release 1.0)\e[0m"
 
 # Mount Core Filesystems (InitramFS + OverlayFS)
 exec /etc/01_mount.sh
-
-echo "(/init) - Error [INIT_FAILED]"
+echo -e "\e[1;31m(Fail) \e[0mInit Script Failed."
 read -n1 -s

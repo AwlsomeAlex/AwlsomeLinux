@@ -32,7 +32,7 @@
 initramfs_prepare() {
 	# Turn off Kernel Messages
 	dmesg -n 1
-	echo "Supressed Most Kernel Messages."
+	echo -e "\e[1;32m(Pass) \e[0mSupressed Kernel Messages."
 	# Prepare and Mount InitramFS
 	mount -t devtmpfs none /dev
 	mount -t proc none /proc
@@ -40,7 +40,7 @@ initramfs_prepare() {
 	mount -t sysfs none /sys
 	mkdir -p /dev/pts
 	mount -t devpts none /dev/pts
-	echo "Mounted InitramFS."
+	echo -e "\e[1;32m(Pass) \e[0mMounted InitramFS."
 }
 
 
@@ -52,23 +52,23 @@ initramfs_prepare() {
 overlayfs_prepare() {
 	# Prepare OverlayFS Root Directory
 	mount -t tmpfs none /mnt
-	echo "Prepared OverlayFS Work Area."
+	echo -e "\e[1;32m(Pass) \e[0mPrepared OverlayFS Root Filesystem."
 	# Create Folders for Root Directory
 	mkdir /mnt/dev
 	mkdir /mnt/sys
 	mkdir /mnt/proc
 	mkdir /mnt/tmp
 	mkdir /mnt/var
-	echo "Created Core OverlayFS Folders."
+	echo -e "\e[1;32m(Pass) \e[0mCore OverlayFS Directories Created."
 	# Copy Root Directory to /mnt (RAM)
 	cp -a bin etc lib lib64 root sbin src usr var /mnt 2>/dev/null
-	echo "Copied Root Filesystem to /mnt."
+	echo -e "\e[1;32m(Pass) \e[0mInitramFS Copied to /mnt."
 	# Define Variables for OverlayFS
 	DEFAULT_OVERLAY_DIR="/tmp/overlay/overlay"
 	DEFAULT_UPPER_DIR="/tmp/overlay/rootfs"
 	DEFAULT_WORK_DIR="/tmp/overlay/work"
 	# Search for Overlay Content
-	echo "Searching for Available Devices for Overlay Content..."
+	echo -e "\e[1;94m(****) \e[0mSearching Available Devices for OverlayFS..."
 	for DEVICE in /dev/* ; do
 		DEV=$(echo "${DEVICE##*/}")
 		SYSDEV=$(echo "/sys/class/block/$DEV")
@@ -92,11 +92,11 @@ overlayfs_prepare() {
 		mount $DEVICE $DEVICE_MNT 2>/dev/null
 		if [ -d $DEVICE_MNT/overlay/rootfs -a -d $DEVICE_MNT/overlay/work ] ; then
 			# Folder Mount ONLY!
-			echo "Found '/overlay' Folder on Device '$DEVICE'."
+			echo -e "\e[1;32m(Pass) \e[0mOverlayFS Directory Found on '$DEVICE'."
 			touch $DEVICE_MNT/overlay/rootfs/rwtest.pid 2>/dev/null
 			if [ -f $DEVICE_MNT/overlay/rootfs/rwtest.pid ] ; then
 				# Read/Write Mode
-				echo "Device '$DEVICE' is mounted in Read/Write Mode."
+				echo -e "\e[1;32m(Pass) \e[0mOverlayFS is Mounted as Read/Write on '$DEVICE'."
 				rm -f $DEVICE_MNT/overlay/rootfs/rwtest.pid
 				OVERLAY_DIR=$DEFAULT_OVERLAY_DIR
 				OVERLAY_MNT=$DEVICE_MNT
@@ -104,7 +104,7 @@ overlayfs_prepare() {
 				WORK_DIR=$DEVICE_MNT/overlay/work
 			else
 				# Read Only Mode
-				echo "Device '$DEVICE' is mounted in Read Only Mode."
+				echo -e "\e[1;32m(Pass) \e[0mOverlayFS is Mounted as Read Only on '$DEVICE'."
 				OVERLAY_DIR=$DEVICE_MNT/overlay/rootfs
 				OVERLAY_MNT=$DEVICE_MNT
 				UPPER_DIR=$DEFAULT_UPPER_DIR
@@ -118,18 +118,18 @@ overlayfs_prepare() {
 			mount -t overlay -o lowerdir=$OVERLAY_DIR:/mnt,upperdir=$UPPER_DIR,workdir=$WORK_DIR none /mnt 2>/dev/null
 			OUT=$?
 			if [ ! "$OUT" = "0" ] ; then
-				echo "OverlayFS Mount Failed. (Probably Formatted with vFAT.)"
+				echo -e "\e[1;31m(Fail) \e[0mOverlayFS Mount Failed. \e[1m(Formatted Under vFat?)\e[0m"
 				umount $OVERLAY_MNT 2>/dev/null
 				rmdir $OVERLAY_MNT 2>/dev/null
 				rmdir $DEFAULT_OVERLAY_DIR 2>/dev/null
 				rmdir $DEFAULT_UPPER_DIR 2>/dev/null
 				rmdir $DEFAULT_WORK_DIR 2>/dev/null
 			else
-				echo "Overlay data from device '$DEVICE' has been merged."
+				echo -e "\e[1;32m(Pass) \e[0mOverlayFS Data on '$DEVICE' Merged to /mnt."
 				break
 			fi
 		else
-			echo "Device '$DEVICE' has no proper Overlay Structure."
+			echo -e "\e[1;95m(Skip) \e[0mDevice '$DEVICE' has No Overlay Structure."
 		fi
 		
 		umount $DEVICE_MNT 2>/dev/null
@@ -140,7 +140,7 @@ overlayfs_prepare() {
 	mount --move /sys /mnt/sys
 	mount --move /proc /mnt/proc
 	mount --move /tmp /mnt/tmp
-	echo "Mount dev, sys, tmp and proc have been moved to /mnt."
+	echo -e "\e[1;32m(Pass) \e[0mMounted /dev, /sys, /tmp and /proc to /mnt."
 }
 
 
@@ -154,7 +154,7 @@ initramfs_prepare
 overlayfs_prepare
 
 # Switch Root from InitramFS to OverlayFS
-echo "Switching Root from InitramFS to OverlayFS."
+echo -e "\e[1;94m(****) \e[0mSwitching Root to OverlayFS..."
 exec switch_root /mnt /etc/02_init.sh
 	
-echo "(/etc/01_mount) - ERROR [MOUNT_FAILED]"
+echo -e "\e[1;31m(Fail) \e[0mMount Script Failed."
