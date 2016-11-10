@@ -24,8 +24,8 @@
 #                       +--(3) /bin/sh (Alt + F4, Recovery/Debug Shell)
 #                       |
 #                       +--(3) /bin/login (Alt + F4 [PUBLIC RELEASES ONLY])
-
-echo -e "\e[1;7mAwlsomeLinux Initialization (Release 1.0)\e[0m"
+clear
+echo -e "\e[1;7mAwlsomeLinux Initialization (Release 1.1)\e[0m"
 
 # Mount Core Filesystems (InitramFS + OverlayFS)
 exec /etc/01_mount.sh

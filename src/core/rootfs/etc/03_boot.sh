@@ -25,7 +25,7 @@
 #                       |
 #                       +--(5) /bin/login (Alt + F4 [PUBLIC RELEASES ONLY])
 
-echo -e "\e[1;7mAwlsomeLinux Busybox Initialization (Release 1.0)\e[0m"
+echo -e "\e[1;7mAwlsomeLinux Busybox Initialization (Release 1.1)\e[0m"
 for DEVICE in /sys/class/net/* ; do
 	echo -e "\e[1;32m(Pass) \e[0mFound Network Device ${DEVICE##*/}"
 	ip link set ${DEVICE##*/} up

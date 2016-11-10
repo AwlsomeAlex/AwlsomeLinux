@@ -9,7 +9,7 @@ Welcome to AwlsomeLinux, a small embedded Linux Distribution that you can "Mostl
 
 ## What is AwlsomeLinux?
 Right now, AwlsomeLinux is a minimal, almost installable, and text-based Linux Environment which has the following features:
-* The Latest Long-Term-Support Linux Kernel (4.x.x) **[Next Linux Kernel to become LTS]**
+* The Latest Long-Term-Support Linux Kernel (4.4.x)
 * The Latest Stable BusyBox (1.25.x Stable)
 * The Latest Glibc (2.24)
 * OverlayFS Support (Read-Only for ISO / Read-Write for USB)

@@ -1,6 +1,6 @@
 ::sysinit:/etc/03_boot.sh
 ::restart:/sbin/init
-::shutdown:echo -e "\e[1;94m(****) \e[0mSyncing OverlayFS..."
+::shutdown:echo -e "\n\e[1;94m(****) \e[0mSyncing OverlayFS..."
 ::shutdown:sync
 ::shutdown:echo -e "\e[1;94m(****) \e[0mUnmounting All Filesystems..."
 ::shutdown:umount -a -r
