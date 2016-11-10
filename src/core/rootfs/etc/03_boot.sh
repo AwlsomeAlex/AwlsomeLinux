@@ -25,7 +25,7 @@
 #                       |
 #                       +--(5) /bin/login (Alt + F4 [PUBLIC RELEASES ONLY])
 
-echo -e "Initializing AwlsomeLinux... (/sbin/init)"
+echo -e "AwlsomeLinux Initialization (release 0.1a)"
 for DEVICE in /sys/class/net/* ; do
 	echo "Found Network Device ${DEVICE##*/}"
 	ip link set ${DEVICE##*/} up

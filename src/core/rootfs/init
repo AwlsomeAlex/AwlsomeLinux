@@ -25,7 +25,7 @@
 #                       |
 #                       +--(3) /bin/login (Alt + F4 [PUBLIC RELEASES ONLY])
 
-echo -e "Initializing AwlsomeLinux... (/init)"
+echo -e "AwlsomeLinux Initialization (release 0.1a)"
 
 # Mount Core Filesystems (InitramFS + OverlayFS)
 exec /etc/01_mount.sh
