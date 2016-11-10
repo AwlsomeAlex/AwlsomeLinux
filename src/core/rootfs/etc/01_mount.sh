@@ -155,6 +155,6 @@ overlayfs_prepare
 
 # Switch Root from InitramFS to OverlayFS
 echo "Switching Root from InitramFS to OverlayFS."
-exec switch_root /mnt /etc/02_boot.sh
+exec switch_root /mnt /etc/02_init.sh
 	
 echo "(/etc/01_mount) - ERROR [MOUNT_FAILED]"
