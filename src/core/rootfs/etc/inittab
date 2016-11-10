@@ -1,0 +1,18 @@
+::sysinit:/etc/03_boot.sh
+::restart:/sbin/init
+::shutdown:echo -e "\nSyncing OverlayFS..."
+::shutdown:sync
+::shutdown:echo -e "\nUnmounting All Filesystems..."
+::shutdown:umount -a -r
+::shutdown:echo -e "\nShutting Down AwlsomeLinux... \n"
+::shutdown:sleep 1
+::ctrlaltdel:/sbin/reboot
+::once:cat /etc/welcome.txt
+::respawn:/bin/cttyhack /bin/login
+tty2::once:cat /etc/welcome.txt
+tty2::respawn:/bin/login
+tty3::once:cat /etc/welcome.txt
+tty3::respawn:/bin/login
+tty4::once:cat /etc/welcome.txt
+tty4::respawn:/bin/sh
+

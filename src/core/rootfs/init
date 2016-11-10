@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# AwlsomeLinux Initialization Chart:
+#
+# /init (this file)
+#  |
+#  +--(1) /etc/01_mount.sh
+#          |
+#          +--(2) /etc/02_init.sh
+#                  |
+#                  +-- /sbin/init
+#                       |
+#                       +--(1) /etc/03_boot.sh
+#                       |       |
+#                       |       +-- udhcpc
+#                       |           |
+#                       |           +-- /etc/rc.udhcp
+#                       +--(2) /bin/login (Alt + F1, Main Login Console)
+#                       |
+#                       +--(2) /bin/login (Alt + F2)
+#                       |
+#                       +--(2) /bin/login (Alt + F3)
+#                       |
+#                       +--(3) /bin/sh (Alt + F4, Recovery/Debug Shell)
+#                       |
+#                       +--(3) /bin/login (Alt + F4 [PUBLIC RELEASES ONLY])
+
+echo -e "Initializing AwlsomeLinux... (/init)"
+
+# Mount Core Filesystems (InitramFS + OverlayFS)
+exec /etc/01_mount.sh
+
+echo "(/init) - Error [INIT_FAILED]"
+read -n1 -s
