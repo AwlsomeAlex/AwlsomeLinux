@@ -138,7 +138,7 @@ generate_image() {
 	cat << CEOF > ./efi/boot/startup.nsh
 	echo -off
 	echo AwlsomeLinux is starting...
-	\\kernel.xz initrd=\\rootfs.xz
+	\\kernel.xz initrd=\\core.xz
 CEOF
 	
 	# Generate AwlsomeLinux Image
