@@ -53,7 +53,7 @@ get_linux() {
 	
 	# Download Kernel Version Defined in AwlsomeLinux Core Packages
 	echo "Downloading Linux Kernel Source Archive..."
-	wget -c $LINUX_DOWNLOAD_URL
+	wget -c --progress=bar:force $LINUX_DOWNLOAD_URL
 	
 	# Clean out old Linux Kernel Work Directory (If 'make clean' or 'make all' wasn't executed)
 	rm -rf $SRC_DIR/core/work/linux
@@ -144,7 +144,7 @@ get_glibc() {
 	
 	# Download Glibc Version Defined in AwlsomeLinux Core Packages
 	echo "Downloading Glibc Source Archive..."
-	wget -c $GLIBC_DOWNLOAD_URL
+	wget -c --progress=bar:force $GLIBC_DOWNLOAD_URL
 	
 	# Clean out old Glibc Work Directory (If 'make clean' or 'make all' wasn't executed)
 	rm -rf $SRC_DIR/core/work/glibc
@@ -254,7 +254,7 @@ get_busybox() {
 	
 	# Download Busybox Version Defined in AwlsomeLinux Core Packages
 	echo "Downloading Busybox Source Archive..."
-	wget -c $BUSYBOX_DOWNLOAD_URL
+	wget -c --progress=bar:force $BUSYBOX_DOWNLOAD_URL
 	
 	# Clean out old Busybox Work Directory (If 'make clean' or 'make all' wasn't executed)
 	rm -rf $SRC_DIR/core/work/busybox

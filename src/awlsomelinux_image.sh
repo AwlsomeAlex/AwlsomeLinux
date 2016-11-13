@@ -37,7 +37,7 @@ get_syslinux() {
 	
 	# Download SYSLINUX
 	echo "Downloading SYSLINUX Source Archive..."
-	wget -c $SYSLINUX_DOWNLOAD_URL
+	wget -c --progress=bar:force $SYSLINUX_DOWNLOAD_URL
 	
 	# Clean out old SYSLINUX Directory (If 'make clean' or 'make all' wasn't executed)
 	rm -rf syslinux
