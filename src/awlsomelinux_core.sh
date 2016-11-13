@@ -395,6 +395,29 @@ generate_core() {
 	
 }
 
+generate_user() {
+	
+	echo "== Generate Root User (Start) =="
+	
+	# Create User Files
+	touch $SRC_DIR/core/core/etc/passwd
+	touch $SRC_DIR/core/core/etc/group
+	
+	# Add group 0 for root.
+	echo "root:x:0:" \
+			> $SRC_DIR/core/core/etc/group
+			
+	# Add user root with password 'toor'.
+	echo echo "root:AprZpdBUhZXss:0:0:AwlsomeLinux Root,,,:/root:/bin/sh" \
+		> $SRC_DIR/core/core/etc/passwd
+	
+	# Generate Root Directory '/root' for Root User
+	mkdir -p $SRC_DIR/core/core/root
+	
+	echo "== Generate Root User (Stop) =="
+	
+}
+
 pack_core() {
 	echo "== Pack Core InitramFS (Start) =="
 	
@@ -432,5 +455,7 @@ build_busybox
 #prepare_src
 
 generate_core
+
+generate_user
 
 pack_core
