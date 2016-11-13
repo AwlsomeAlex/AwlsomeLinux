@@ -399,8 +399,6 @@ get_busybox
 
 build_busybox
 
-#prepare_src
-
 generate_core
 
 generate_user
