@@ -109,16 +109,19 @@ generate_user() {
 	touch $SRC_DIR/overlay/overlayfs/etc/passwd
 	touch $SRC_DIR/overlay/overlayfs/etc/group
 	
-	# Add group 0 for root.
+	# Add group 0 for root
 	echo "root:x:0:" \
 			> $SRC_DIR/overlay/overlayfs/etc/group
 			
-	# Add user root with password 'toor'.
+	# Add user root with password 'toor'
 	echo "root:AprZpdBUhZXss:0:0:AwlsomeLinux Root,,,:/root:/bin/sh" \
 		> $SRC_DIR/overlay/overlayfs/etc/passwd
 	
 	# Generate Root Directory '/root' for Root User
 	mkdir -p $SRC_DIR/overlay/overlayfs/root
+	
+	# Copy OverlayFS Inittab from 'core/rootfs/etc' to 'overlay/overlayfs/etc'
+	cp -r $SRC_DIR/core/rootfs/etc/inittab_overlay $SRC_DIR/overlay/overlayfs/etc/inittab
 	
 	echo "== Generate Root User (Stop) =="
 	
