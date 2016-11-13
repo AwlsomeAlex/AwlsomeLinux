@@ -28,7 +28,7 @@ SRC_DIR=$(pwd)
 ###########################
 
 install_glibc() {
-	echo "--- GLIBC Full Installation Start ---"
+	echo "== GLIBC Full Installation (Start) =="
 	
 	# Check if Glibc is Built
 	if [ ! -d $SRC_DIR/core/install/glibc ] ; then
@@ -73,7 +73,7 @@ install_glibc() {
 	
 	cd $SRC_DIR
 	
-	echo "--- GLIBC Full Installation Stop ---"
+	echo "== GLIBC Full Installation (Stop) =="
 }
 
 
@@ -83,11 +83,7 @@ install_glibc() {
 ######################
 overlayfs_create() {
 	
-	echo "--- OverlayFS Creation Start ---"
-	
-	# Clean OverlayFS Directory
-	rm -rf $SRC_DIR/overlay/overlayfs
-	mkdir $SRC_DIR/overlay/overlayfs
+	echo "== OverlayFS Creation (Start) =="
 
 	# Copy Packages to OverlayFS
 	cp -r $SRC_DIR/overlay/install/glibc/* $SRC_DIR/overlay/overlayfs
@@ -96,13 +92,39 @@ overlayfs_create() {
 	
 	cd $SRC_DIR
 	
-	echo "--- OverlayFS Creation Stop ---"
-	
+	echo "== OverlayFS Creation (Stop) =="
 	
 }
 
+######################
+# Root User Creation #
+######################
+generate_user() {
+	
+	echo "== Generate Root User (Start) =="
+	
+	# Create User Files
+	touch $SRC_DIR/overlay/overlayfs/etc/passwd
+	touch $SRC_DIR/overlay/overlayfs/etc/group
+	
+	# Add group 0 for root.
+	echo "root:x:0:" \
+			> $SRC_DIR/overlay/overlayfs/etc/group
+			
+	# Add user root with password 'toor'.
+	echo "root:AprZpdBUhZXss:0:0:AwlsomeLinux Root,,,:/root:/bin/sh" \
+		> $SRC_DIR/overlay/overlayfs/etc/passwd
+	
+	# Generate Root Directory '/root' for Root User
+	mkdir -p $SRC_DIR/overlay/overlayfs/root
+	
+	echo "== Generate Root User (Stop) =="
+	
+}
 
 
 install_glibc
 
 overlayfs_create
+
+generate_user
