@@ -120,6 +120,27 @@ generate_user() {
 	# Generate Root Directory '/root' for Root User
 	mkdir -p $SRC_DIR/overlay/overlayfs/root
 	
+	# Create new Inittab for Root User. (Allows Login only if OverlayFS is mounted.)
+	touch $SRC_DIR/overlay/overlayfs/etc/inittab
+	
+	echo "::sysinit:/etc/03_boot.sh" > $SRC_DIR/overlay/overlayfs/etc/inittab
+    echo "::restart:/sbin/init" >> $SRC_DIR/overlay/overlayfs/etc/inittab
+    echo "::shutdown:echo -e "\n\e[1;94m(****) \e[0mSyncing OverlayFS..."" >> $SRC_DIR/overlay/overlayfs/etc/inittab
+    echo "::shutdown:sync" >> $SRC_DIR/overlay/overlayfs/etc/inittab
+    echo "::shutdown:echo -e "\e[1;94m(****) \e[0mUnmounting All Filesystems..."" >> $SRC_DIR/overlay/overlayfs/etc/inittab
+    echo "::shutdown:umount -a -r" >> $SRC_DIR/overlay/overlayfs/etc/inittab
+    echo "::shutdown:echo -e "\e[1;94m(****) \e[0mShutting Down AwlsomeLinux..."" >> $SRC_DIR/overlay/overlayfs/etc/inittab
+    echo "::shutdown:sleep 1" >> $SRC_DIR/overlay/overlayfs/etc/inittab
+    echo "::ctrlaltdel:/sbin/reboot" >> $SRC_DIR/overlay/overlayfs/etc/inittab
+    echo "::once:cat /etc/welcome.txt" >> $SRC_DIR/overlay/overlayfs/etc/inittab
+    echo "::respawn:/bin/cttyhack /bin/login" >> $SRC_DIR/overlay/overlayfs/etc/inittab
+    echo "tty2::once:cat /etc/welcome.txt" >> $SRC_DIR/overlay/overlayfs/etc/inittab
+    echo "tty2::respawn:/bin/login" >> $SRC_DIR/overlay/overlayfs/etc/inittab
+    echo "tty3::once:cat /etc/welcome.txt" >> $SRC_DIR/overlay/overlayfs/etc/inittab
+    echo "tty3::respawn:/bin/login" >> $SRC_DIR/overlay/overlayfs/etc/inittab
+    echo "tty4::once:cat /etc/welcome.txt" >> $SRC_DIR/overlay/overlayfs/etc/inittab
+    echo "tty4::respawn:/bin/sh" >> $SRC_DIR/overlay/overlayfs/etc/inittab
+	
 	echo "== Generate Root User (Stop) =="
 	
 }
