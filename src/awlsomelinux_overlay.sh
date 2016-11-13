@@ -76,14 +76,16 @@ install_glibc() {
 	echo "== GLIBC Full Installation (Stop) =="
 }
 
-
-
 ######################
 # OverlayFS Creation #
 ######################
 overlayfs_create() {
 	
 	echo "== OverlayFS Creation (Start) =="
+
+	# Create OverlayFS Directories
+	mkdir $SRC_DIR/overlay/overlayfs/etc
+	mkdir $SRC_DIR/overlay/overlayfs/lib
 
 	# Copy Packages to OverlayFS
 	cp -r $SRC_DIR/overlay/install/glibc/* $SRC_DIR/overlay/overlayfs
