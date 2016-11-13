@@ -408,7 +408,7 @@ generate_user() {
 			> $SRC_DIR/core/core/etc/group
 			
 	# Add user root with password 'toor'.
-	echo echo "root:AprZpdBUhZXss:0:0:AwlsomeLinux Root,,,:/root:/bin/sh" \
+	echo "root:AprZpdBUhZXss:0:0:AwlsomeLinux Root,,,:/root:/bin/sh" \
 		> $SRC_DIR/core/core/etc/passwd
 	
 	# Generate Root Directory '/root' for Root User
