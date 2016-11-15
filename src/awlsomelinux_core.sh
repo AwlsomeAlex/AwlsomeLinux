@@ -134,7 +134,8 @@ build_linux() {
 		modules -j $NUM_JOBS
 		
 	make \
-		INSTALL_MOD_PATH=$SRC_DIR/core/install/linux/lib/modules
+		INSTALL_MOD_PATH=$SRC_DIR/core/install/linux/lib/modules \
+		modules_install -j $NUM_JOBS
 
 	# Generate Linux Kernel Firmware
 	echo "Generating Linux Kernel Firmware..."
