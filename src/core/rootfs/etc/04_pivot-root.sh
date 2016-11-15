@@ -10,7 +10,7 @@
 #                  |
 #                  +-- /sbin/init
 #                       |
-#                       +--(1) /etc/03_boot.sh (this file)
+#                       +--(1) /etc/03_boot.sh
 #                       |       |
 #                       |       +-- udhcpc
 #                       |           |
@@ -25,13 +25,26 @@
 #                       |
 #                       +--(5) /bin/login (Alt + F4 [PUBLIC RELEASES ONLY])
 #                           |
-#                           +--(6) /etc/04_pivot-root.sh [EXPERIMENTAL!]
+#                           +--(6) /etc/04_pivot-root.sh [EXPERIMENTAL!]  (this file)
 
-echo -e "\e[1;7mAwlsomeLinux Busybox Initialization (Release 1.1)\e[0m"
-for DEVICE in /sys/class/net/* ; do
-	echo -e "\e[1;32m(Pass) \e[0mFound Network Device ${DEVICE##*/}"
-	ip link set ${DEVICE##*/} up
-	[ ${DEVICE##*/} != lo ] && udhcpc -b -i ${DEVICE##*/} -s /etc/rc.dhcp
-done
-echo -e "\e[1;32m(Pass) \e[0mAwlsomeLinux has Successfully Booted."
-clear
+cd /
+
+mkdir n
+
+mount -t tmpfs none /n
+
+cp -a bin sbin usr lib lib64 var /n
+
+cd n
+
+mkdir -p dev/pts proc sys tmp old
+
+mount --move /dev/pts dev/pts
+mount --move /dev dev
+mount --move /proc proc
+mount --move /sys sys
+mount --move /tmp tmp
+
+pivot_root . old
+
+chroot . /bin/sh

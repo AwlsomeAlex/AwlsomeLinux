@@ -122,8 +122,35 @@ build_linux() {
 		INSTALL_HDR_PATH=$SRC_DIR/core/install/linux \
 		headers_install -j $NUM_JOBS
 		
+	# Make Linux Kernel 'modules/firmware' Directories
+	rm -rf $SRC_DIR/core/install/linux/lib
+	mkdir $SRC_DIR/core/install/linux/lib
+	mkdir $SRC_DIR/core/install/linux/lib/modules
+	mkdir $SRC_DIR/core/install/linux/lib/firmware
+		
+	# Generate Linux Kernel Modules
+	echo "Generating Linux Kernel Modules..."
+	make \
+		modules -j $NUM_JOBS
+		
+	make \
+		INSTALL_MOD_PATH=$SRC_DIR/core/install/linux/lib/modules
+
+	# Generate Linux Kernel Firmware
+	echo "Generating Linux Kernel Firmware..."
+	make \
+		INSTALL_FW_PATH=$SRC_DIR/core/install/linux/lib/firmware \
+		firmware_install -j $NUM_JOBS
+
 	# Remember Linux Kernel Installed Directory
 	LINUX_INSTALLED=$SRC_DIR/core/install/linux
+	
+	# Configure Linux Kernel Modules
+	cd $SRC_DIR/core/install/linux/lib/modules
+	cd $(ls)
+	
+	unlink build
+	unlink source
 	
 	cd $SRC_DIR
 		
@@ -349,6 +376,9 @@ generate_core() {
 	cp $GLIBC_PREPARED/lib/libc.so.6 lib
 	cp $GLIBC_PREPARED/lib/libresolv.so.2 lib
 	cp $GLIBC_PREPARED/lib/libnss_dns.so.2 lib
+	
+	# Copy all Linux Kernel Modules/Firmware to '/lib'
+	cp -r $SRC_DIR/core/install/linux/lib/* lib
 	echo "All Directories have been prepared."
 	
 	# Reduce size of Libraries and Executables
