@@ -34,12 +34,13 @@ initramfs_prepare() {
 	dmesg -n 1
 	echo -e "\e[1;32m(Pass) \e[0mSupressed Kernel Messages."
 	# Prepare and Mount InitramFS
-	mount -t devtmpfs none /dev
-	mount -t proc none /proc
-	mount -t tmpfs none /tmp -o mode=1777
-	mount -t sysfs none /sys
+	mount -t proc proc /proc
+	mount -t sysfs sysfs /sys
+	sysctl -w kernel.hotplug=/sbin/mdev
+	mount -t tmpfs -o size=64k,mode=0755 tmpfs /dev
 	mkdir -p /dev/pts
-	mount -t devpts none /dev/pts
+	mount -t devpts devpts /dev/pts
+	mdev -s
 	echo -e "\e[1;32m(Pass) \e[0mMounted InitramFS."
 }
 
