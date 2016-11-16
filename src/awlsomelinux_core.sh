@@ -214,12 +214,12 @@ build_glibc() {
 	# Configure Glibc:
 	echo "Configuring Glibc..."
 	$GLIBC_SRC/configure \
-		--prefix= \
-		--with-headers=$LINUX_INSTALLED/include \
-		--without-gd \
-		--without-selinux \
+  		--prefix= \
+  		--with-headers=$KERNEL_INSTALLED/include \
+ 		--without-gd \
+ 		--without-selinux \
 		--disable-werror \
-		CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE"
+ 		CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE"
 	
 	# Build Glibc
 	echo "Building Glibc..."
@@ -319,7 +319,7 @@ build_busybox() {
 	# Build Busybox
 	echo "Building Busybox..."
 	make \
-		EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORITFY_SOURCE" \
+		EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
 		busybox -j $NUM_JOBS
 		
 	# Install Busybox
