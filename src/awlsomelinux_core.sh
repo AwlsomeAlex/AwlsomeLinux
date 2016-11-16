@@ -215,7 +215,7 @@ build_glibc() {
 	echo "Configuring Glibc..."
 	$GLIBC_SRC/configure \
   		--prefix= \
-  		--with-headers=$KERNEL_INSTALLED/include \
+  		--with-headers=$LINUX_INSTALLED/include \
  		--without-gd \
  		--without-selinux \
 		--disable-werror \
