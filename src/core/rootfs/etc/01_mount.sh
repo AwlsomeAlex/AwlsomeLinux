@@ -34,13 +34,14 @@ initramfs_prepare() {
 	dmesg -n 1
 	echo -e "\e[1;32m(Pass) \e[0mSupressed Kernel Messages."
 	# Prepare and Mount InitramFS
-	mount -t proc proc /proc
-	mount -t sysfs sysfs /sys
-	echo /sbin/mdev > /proc/sys/kernel/hotplug
+	mount -t devtmpfs none /dev -o size=64k,mode=0755
+	mount -t proc none /proc
+	mount -t sysfs none /sys
+	sysctl -w kernel.hotplug=/sbin/mdev
+	mount -t tmpfs none /tmp -o mode=1777
+  	mkdir -p /dev/pts
+	mount -t devpts none /dev/pts
 	mdev -s
-	mount -t tmpfs -o size=64k,mode=0755 tmpfs /dev
-	mkdir /dev/pts
-	mount -t devpts devpts /dev/pts
 	echo -e "\e[1;32m(Pass) \e[0mMounted InitramFS."
 }
 
@@ -52,7 +53,7 @@ initramfs_prepare() {
 
 overlayfs_prepare() {
 	# Prepare OverlayFS Root Directory
-	mount -t tmpfs tmpfs /mnt
+	mount -t tmpfs none /mnt
 	echo -e "\e[1;32m(Pass) \e[0mPrepared OverlayFS Root Filesystem."
 	# Create Folders for Root Directory
 	mkdir /mnt/dev
