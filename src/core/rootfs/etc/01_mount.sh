@@ -36,11 +36,11 @@ initramfs_prepare() {
 	# Prepare and Mount InitramFS
 	mount -t proc proc /proc
 	mount -t sysfs sysfs /sys
-	sysctl -w kernel.hotplug=/sbin/mdev
-	mount -t tmpfs -o size=64k,mode=0755 tmpfs /dev
-	mkdir -p /dev/pts
-	mount -t devpts devpts /dev/pts
+	echo /sbin/mdev > /proc/sys/kernel/hotplug
 	mdev -s
+	mount -t tmpfs -o size=64k,mode=0755 tmpfs /dev
+	mkdir /dev/pts
+	mount -t devpts devpts /dev/pts
 	echo -e "\e[1;32m(Pass) \e[0mMounted InitramFS."
 }
 
@@ -52,7 +52,7 @@ initramfs_prepare() {
 
 overlayfs_prepare() {
 	# Prepare OverlayFS Root Directory
-	mount -t tmpfs none /mnt
+	mount -t tmpfs tmpfs /mnt
 	echo -e "\e[1;32m(Pass) \e[0mPrepared OverlayFS Root Filesystem."
 	# Create Folders for Root Directory
 	mkdir /mnt/dev
