@@ -78,6 +78,7 @@ clean:
 	@echo "Remvoing AwlsomeLinux Build Log File..."
 	@rm -rf awlsomelinux_core.log
 	@rm -rf awlsomelinux_image.log
+	@rm -rf awlsomelinux_overlay.log
 
 qemu64:
 	@if [ ! -f ./awlsomelinux.iso ]; then echo "AwlsomeLinux Image not found. Please run 'make all'"; exit 1; fi
@@ -100,8 +101,6 @@ help:
 	@echo " make overlay	Generate the OverlayFS ONLY."
 	@echo ""
 	@echo " make clean 	Remove all Generated Files."
-	@echo ""
-	@echo " make src	Generate '.tar.xz' source archive of AwlsomeLinux"
 	@echo ""
 	@echo " make qemu(bit)	Run AwlsomeLinux in QEMU (bit is the architecture of AwlsomeLinux which was compiled [Host])."
 	@echo ""
