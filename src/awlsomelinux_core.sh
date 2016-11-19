@@ -26,7 +26,7 @@ NUM_JOBS=$((NUM_CORES * JOB_FACTOR))
 # AwlsomeLinux Main Packages #
 ##############################
 
-LINUX_DOWNLOAD_URL=http://kernel.org/pub/linux/kernel/v4.x/linux-4.4.30.tar.xz
+LINUX_DOWNLOAD_URL=http://kernel.org/pub/linux/kernel/v4.x/linux-4.4.31.tar.xz
 LINUX_ARCHIVE_FILE=${LINUX_DOWNLOAD_URL##*/}
 GLIBC_DOWNLOAD_URL=http://ftp.gnu.org/gnu/glibc/glibc-2.24.tar.bz2
 GLIBC_ARCHIVE_FILE=${GLIBC_DOWNLOAD_URL##*/}
@@ -53,7 +53,7 @@ get_linux() {
 	
 	# Download Kernel Version Defined in AwlsomeLinux Core Packages
 	echo "Downloading Linux Kernel Source Archive..."
-	wget -c $LINUX_DOWNLOAD_URL
+	wget -c --progress=bar:force $LINUX_DOWNLOAD_URL
 	
 	# Clean out old Linux Kernel Work Directory (If 'make clean' or 'make all' wasn't executed)
 	rm -rf $SRC_DIR/core/work/linux
@@ -122,8 +122,36 @@ build_linux() {
 		INSTALL_HDR_PATH=$SRC_DIR/core/install/linux \
 		headers_install -j $NUM_JOBS
 		
+	# Make Linux Kernel 'modules/firmware' Directories
+	rm -rf $SRC_DIR/core/install/linux/lib
+	mkdir $SRC_DIR/core/install/linux/lib
+	mkdir $SRC_DIR/core/install/linux/lib/modules
+	mkdir $SRC_DIR/core/install/linux/lib/firmware
+		
+	# Generate Linux Kernel Modules
+	echo "Generating Linux Kernel Modules..."
+	make \
+		modules -j $NUM_JOBS
+		
+	make \
+		INSTALL_MOD_PATH=$SRC_DIR/core/install/linux/ \
+		modules_install -j $NUM_JOBS
+
+	# Generate Linux Kernel Firmware
+	echo "Generating Linux Kernel Firmware..."
+	make \
+		INSTALL_FW_PATH=$SRC_DIR/core/install/linux/lib/firmware \
+		firmware_install -j $NUM_JOBS
+
 	# Remember Linux Kernel Installed Directory
 	LINUX_INSTALLED=$SRC_DIR/core/install/linux
+	
+	# Configure Linux Kernel Modules
+	cd $SRC_DIR/core/install/linux/lib/modules
+	cd $(ls)
+	
+	unlink build
+	unlink source
 	
 	cd $SRC_DIR
 		
@@ -144,7 +172,7 @@ get_glibc() {
 	
 	# Download Glibc Version Defined in AwlsomeLinux Core Packages
 	echo "Downloading Glibc Source Archive..."
-	wget -c $GLIBC_DOWNLOAD_URL
+	wget -c --progress=bar:force $GLIBC_DOWNLOAD_URL
 	
 	# Clean out old Glibc Work Directory (If 'make clean' or 'make all' wasn't executed)
 	rm -rf $SRC_DIR/core/work/glibc
@@ -186,12 +214,12 @@ build_glibc() {
 	# Configure Glibc:
 	echo "Configuring Glibc..."
 	$GLIBC_SRC/configure \
-		--prefix= \
-		--with-headers=$LINUX_INSTALLED/include \
-		--without-gd \
-		--without-selinux \
+  		--prefix= \
+  		--with-headers=$LINUX_INSTALLED/include \
+ 		--without-gd \
+ 		--without-selinux \
 		--disable-werror \
-		CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE"
+ 		CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE"
 	
 	# Build Glibc
 	echo "Building Glibc..."
@@ -254,7 +282,7 @@ get_busybox() {
 	
 	# Download Busybox Version Defined in AwlsomeLinux Core Packages
 	echo "Downloading Busybox Source Archive..."
-	wget -c $BUSYBOX_DOWNLOAD_URL
+	wget -c --progress=bar:force $BUSYBOX_DOWNLOAD_URL
 	
 	# Clean out old Busybox Work Directory (If 'make clean' or 'make all' wasn't executed)
 	rm -rf $SRC_DIR/core/work/busybox
@@ -291,7 +319,7 @@ build_busybox() {
 	# Build Busybox
 	echo "Building Busybox..."
 	make \
-		EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORITFY_SOURCE" \
+		EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
 		busybox -j $NUM_JOBS
 		
 	# Install Busybox
@@ -316,34 +344,6 @@ build_busybox() {
 # RootFS Creation #
 ###################
 
-#prepare_src() {
-#	echo "== Prepare Source (Start) =="
-	
-	# Change Directory to 'core'
-#	cd core
-	
-#	echo "Preparing AwlsomeLinux Source Files..."
-	
-	# Clean out old Src Directory (If 'make clean' or 'make all' wasn't executed)
-#	rm -rf src
-#	mkdir src
-	
-	# Copy all Source files/directories to 'core/src'
-#	cp ../*.sh src
-#	cp ../Makefile src
-#	cp ../README src
-#	cp -r ../overlay src
-#	cp -r ../core src
-#	cp -r rootfs src
-	
-	# Delete '.gitignore' files used to make folders appear in git.
-#	find * -type f -name '.gitignore' -exec rm {} +
-	
-#	cd $SRC_DIR
-	
-#	echo "== Prepare Source (Stop) =="
-#}
-
 generate_core() {
 	echo "== Prepare Core InitramFS (Start) =="
 	
@@ -354,7 +354,6 @@ generate_core() {
 	echo "Preparing InitramFS Area..."
 	rm -rf core
 	cp -r $BUSYBOX_INSTALLED core
-#	cp -r src/rootfs/* core
 	cp -r rootfs/* core
 	
 	# Change Directory to InitramFS 'core/core'
@@ -362,7 +361,6 @@ generate_core() {
 	
 	# Prepare Directories in InitramFS
 	rm -f linuxrc
-#	cp -r ../src usr/src
 	
 	BUSYBOX_ARCH=$(file bin/busybox | cut -d' '  -f3)
 	if [ "$BUSYBOX_ARCH" = "64-bit" ] ; then
@@ -379,6 +377,9 @@ generate_core() {
 	cp $GLIBC_PREPARED/lib/libc.so.6 lib
 	cp $GLIBC_PREPARED/lib/libresolv.so.2 lib
 	cp $GLIBC_PREPARED/lib/libnss_dns.so.2 lib
+	
+	# Copy all Linux Kernel Modules/Firmware to '/lib'
+	cp -r $SRC_DIR/core/install/linux/lib/* lib
 	echo "All Directories have been prepared."
 	
 	# Reduce size of Libraries and Executables
@@ -429,8 +430,8 @@ get_busybox
 
 build_busybox
 
-#prepare_src
-
 generate_core
+
+generate_user
 
 pack_core

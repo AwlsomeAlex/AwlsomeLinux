@@ -8,11 +8,11 @@
 ::shutdown:sleep 1
 ::ctrlaltdel:/sbin/reboot
 ::once:cat /etc/welcome.txt
-::respawn:/bin/cttyhack /bin/sh
+::respawn:/bin/cttyhack /bin/login
 tty2::once:cat /etc/welcome.txt
-tty2::respawn:/bin/sh
+tty2::respawn:/bin/login
 tty3::once:cat /etc/welcome.txt
-tty3::respawn:/bin/sh
+tty3::respawn:/bin/login
 tty4::once:cat /etc/welcome.txt
 tty4::respawn:/bin/sh
 

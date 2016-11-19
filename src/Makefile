@@ -14,6 +14,8 @@ all: clean
 	
 core:
 	@echo "Cleaning Out Core Directories Only..."
+	@rm -rf core/core
+	@mkdir core/core
 	@rm -rf core/source
 	@mkdir core/source
 	@rm -rf core/work
@@ -52,6 +54,11 @@ clean:
 	@echo "Removing AwlsomeLinux Core Packages' Install Directory..."
 	@rm -rf core/install
 	@mkdir core/install
+	@echo "Removing AwlsomeLinux Core Core Packing Directory..."
+	@rm -rf core/core
+	@mkdir core/core
+	@echo "Removing Pre-Generated Core Archive..."
+	@rm -rf core/core.cpio.xz
 	@echo "Removing Pre-Generated AwlsomeLinux ISO Image..."
 	@rm -rf awlsomelinux.iso
 	@echo "Removing AwlsomeLinux Image Directory Content..."
@@ -65,9 +72,13 @@ clean:
 	@echo "Removing AwlsomeLinux Overlay Packages' Install Directory..."
 	@rm -rf overlay/install
 	@mkdir overlay/install
+	@echo "Removing AwlsomeLinux Overlay OverlayFS Packing Directory..."
+	@rm -rf overlay/overlayfs
+	@mkdir overlay/overlayfs
 	@echo "Remvoing AwlsomeLinux Build Log File..."
 	@rm -rf awlsomelinux_core.log
 	@rm -rf awlsomelinux_image.log
+	@rm -rf awlsomelinux_overlay.log
 
 qemu64:
 	@if [ ! -f ./awlsomelinux.iso ]; then echo "AwlsomeLinux Image not found. Please run 'make all'"; exit 1; fi
@@ -90,8 +101,6 @@ help:
 	@echo " make overlay	Generate the OverlayFS ONLY."
 	@echo ""
 	@echo " make clean 	Remove all Generated Files."
-	@echo ""
-	@echo " make src	Generate '.tar.xz' source archive of AwlsomeLinux"
 	@echo ""
 	@echo " make qemu(bit)	Run AwlsomeLinux in QEMU (bit is the architecture of AwlsomeLinux which was compiled [Host])."
 	@echo ""

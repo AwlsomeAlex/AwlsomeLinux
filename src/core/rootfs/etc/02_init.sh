@@ -2,11 +2,11 @@
 
 # AwlsomeLinux Initialization Chart:
 #
-# /init (this file)
+# /init
 #  |
 #  +--(1) /etc/01_mount.sh
 #          |
-#          +--(2) /etc/02_init.sh
+#          +--(2) /etc/02_init.sh (this file)
 #                  |
 #                  +-- /sbin/init
 #                       |
@@ -17,17 +17,16 @@
 #                       |           +-- /etc/rc.udhcp
 #                       +--(2) /bin/login (Alt + F1, Main Login Console)
 #                       |
-#                       +--(2) /bin/login (Alt + F2)
+#                       +--(3) /bin/login (Alt + F2)
 #                       |
-#                       +--(2) /bin/login (Alt + F3)
+#                       +--(4) /bin/login (Alt + F3)
 #                       |
-#                       +--(3) /bin/sh (Alt + F4, Recovery/Debug Shell)
+#                       +--(5) /bin/sh (Alt + F4 [Recovery/Debug Shell])
 #                       |
-#                       +--(3) /bin/login (Alt + F4 [PUBLIC RELEASES ONLY])
-clear
-echo -e "\e[1;7mAwlsomeLinux Initialization (Release 1.2.1)\e[0m"
+#                       +--(5) /bin/login (Alt + F4 [PUBLIC RELEASES ONLY])
+echo -e "\e[1;32m(Pass) \e[0mSwitch Root to OverlayFS Successful."
+echo -e "\e[1;94m(****) \e[0mExecuting /sbin/init as PID 1..."
+exec /sbin/init
 
-# Mount Core Filesystems (InitramFS + OverlayFS)
-exec /etc/01_mount.sh
 echo -e "\e[1;31m(Fail) \e[0mInit Script Failed."
-read -n1 -s
+	
