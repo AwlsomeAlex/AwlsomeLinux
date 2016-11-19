@@ -1,6 +1,6 @@
-# AwlsomeLinux (mdev Branch)
-
-This branch for AwlsomeLinux is specifically for the implementation of mdev, an embedded /dev manager which will use the Linux Firmware and Modules to properly load addition drivers for devices incompatable with the default Linux Kernel Config.
+# AwlsomeLinux (RootFS Rewrite Branch)
+ 
+This branch for AwlsomeLinux is specifically for the use of rewritting the RootFS Busybox Init System, not that anything is wrong with it, but I feel it can be further simplified, along with user creation and timezone generation can be configured during the ISO Creation, due to it only being able to be configured when Glibc is being built.
 
 ![AwlsomeLinux Init](https://raw.githubusercontent.com/AwlsomeAlex/AwlsomeLinux/rewrite/AwlsomeLinux_nov-10-2016.png)
 
