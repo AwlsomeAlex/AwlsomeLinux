@@ -1,6 +1,6 @@
-# AwlsomeLinux (RootFS Rewrite Branch)
+# AwlsomeLinux
  
-This branch for AwlsomeLinux is specifically for the use of rewritting the RootFS Busybox Init System, not that anything is wrong with it, but I feel it can be further simplified, along with user creation and timezone generation can be configured during the ISO Creation, due to it only being able to be configured when Glibc is being built.
+Creating a Linux Distributon Seemed to be an impossible task, where only the huge people like Debian or Fedora could make them, or the best you can do is remix Ubuntu and hope it contents that urge of making something. However, thanks to Ivandavidov's Minimal Linux Live Project (https://github.com/ivandavidov/minimal) that dream is a reality for me. 
 
 ![AwlsomeLinux Init](https://raw.githubusercontent.com/AwlsomeAlex/AwlsomeLinux/rewrite/AwlsomeLinux_nov-10-2016.png)
 
