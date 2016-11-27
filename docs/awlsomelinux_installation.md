@@ -1,5 +1,5 @@
 # AwlsomeLinux Installation Process
-The AwlsomeLinux Installation Process is a complex, multi-step installation where the default sets will be installed.
+The AwlsomeLinux Installation Process is a complex, multi-step installation where the default sets will be installed...
 
 ## Installed Componients:
 * AwlsomeLinux Core (initramfs)
