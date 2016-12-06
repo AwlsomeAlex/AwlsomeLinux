@@ -80,7 +80,7 @@ install_glibc() {
 # Minimal Linux Live Utilities Installer #
 ##########################################
 
-install_mll-utils() {
+install_mll_utils() {
 	
 	echo "== Minimal Linux Live Utilities (Start) =="
 	
@@ -245,8 +245,8 @@ cd \$CURRENT_DIR
 
 CEOF
 	
-	# Make 'mll-installer' executable
-	chmod +rx sbin/mll-installer
+	# Make 'mll-install' executable
+	chmod +rx sbin/mll-install
 	
 	# Copy 'mll-installer' Dependencies from Generated Syslinux
 	cd $SRC_DIR/isoimage/syslinux
@@ -329,7 +329,7 @@ generate_user() {
 
 install_glibc
 
-install_mll-utils
+install_mll_utils
 
 overlayfs_create
 
