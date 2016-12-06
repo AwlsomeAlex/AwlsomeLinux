@@ -26,7 +26,7 @@ NUM_JOBS=$((NUM_CORES * JOB_FACTOR))
 # AwlsomeLinux Main Packages #
 ##############################
 
-LINUX_DOWNLOAD_URL=http://kernel.org/pub/linux/kernel/v4.x/linux-4.4.32.tar.xz
+LINUX_DOWNLOAD_URL=http://kernel.org/pub/linux/kernel/v4.x/linux-4.4.36.tar.xz
 LINUX_ARCHIVE_FILE=${LINUX_DOWNLOAD_URL##*/}
 GLIBC_DOWNLOAD_URL=http://ftp.gnu.org/gnu/glibc/glibc-2.24.tar.bz2
 GLIBC_ARCHIVE_FILE=${GLIBC_DOWNLOAD_URL##*/}
