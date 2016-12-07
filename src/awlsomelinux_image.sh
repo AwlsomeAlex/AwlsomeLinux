@@ -126,12 +126,26 @@ generate_image() {
 	
 	cp -rf $SRC_DIR/overlay/overlayfs/* overlay/rootfs
 	
-	# Copy 'isolinux.bin' and 'ldlinux.c32' to AwlsomeLinux Image
+	# Copy Required Syslinux Componients to AwlsomeLinux Image
 	cp $WORK_SYSLINUX_DIR/bios/core/isolinux.bin .
     cp $WORK_SYSLINUX_DIR/bios/com32/elflink/ldlinux/ldlinux.c32 .
+    cp $WORK_SYSLINUX_DIR/bios/com32/libutil/libutil.c32 .
+    cp $WORK_SYSLINUX_DIR/bios/com32/menu/menu.c32 .
 	
 	# Create ISOLINUX Configuration File
-	echo 'default kernel.xz initrd=core.xz vga=ask' > ./syslinux.cfg
+	cat << CEOF > ./syslinux.cfg
+UI menu.c32
+PROMPT 0
+ 
+MENU TITLE AwlsomeLinux Boot Menu:
+TIMEOUT 5
+DEFAULT awlsomelinux
+ 
+LABEL awlsomelinux
+        MENU LABEL AwlsomeLinux
+        LINUX kernel.xz
+        INITRD core.xz
+CEOF
 	
 	# Create UEFI Boot Script
 	mkdir -p efi/boot
