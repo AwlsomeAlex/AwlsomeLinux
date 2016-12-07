@@ -224,7 +224,7 @@ mkdir /tmp/mnt/inst
 mount /dev/\$1 /tmp/mnt/inst
 sleep 1
 cd /tmp/mnt/device
-cp -r kernel.xz core.xz syslinux.cfg overlay /tmp/mnt/inst 2>/dev/null
+cp -r kernel.xz core.xz syslinux.cfg menu.c32 libutil.c32 overlay /tmp/mnt/inst 2>/dev/null
 cat /opt/syslinux/mbr.bin > /dev/\$1
 cd /tmp/mnt/inst
 /sbin/extlinux --install .
