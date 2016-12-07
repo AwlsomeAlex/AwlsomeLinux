@@ -138,7 +138,7 @@ UI menu.c32
 PROMPT 0
  
 MENU TITLE AwlsomeLinux Boot Menu:
-TIMEOUT 5
+TIMEOUT 10
 DEFAULT awlsomelinux
  
 LABEL awlsomelinux
