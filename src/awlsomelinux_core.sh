@@ -26,11 +26,11 @@ NUM_JOBS=$((NUM_CORES * JOB_FACTOR))
 # AwlsomeLinux Main Packages #
 ##############################
 
-LINUX_DOWNLOAD_URL=http://kernel.org/pub/linux/kernel/v4.x/linux-4.4.36.tar.xz
+LINUX_DOWNLOAD_URL=http://kernel.org/pub/linux/kernel/v4.x/linux-4.9.10.tar.xz
 LINUX_ARCHIVE_FILE=${LINUX_DOWNLOAD_URL##*/}
-GLIBC_DOWNLOAD_URL=http://ftp.gnu.org/gnu/glibc/glibc-2.24.tar.bz2
+GLIBC_DOWNLOAD_URL=http://ftp.gnu.org/gnu/glibc/glibc-2.25.tar.bz2
 GLIBC_ARCHIVE_FILE=${GLIBC_DOWNLOAD_URL##*/}
-BUSYBOX_DOWNLOAD_URL=http://busybox.net/downloads/busybox-1.25.1.tar.bz2
+BUSYBOX_DOWNLOAD_URL=http://busybox.net/downloads/busybox-1.26.2.tar.bz2
 BUSYBOX_ARCHIVE_FILE=${BUSYBOX_DOWNLOAD_URL##*/}
 
 ############################
